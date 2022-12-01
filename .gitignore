@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/Unity/CozyWinterJam2022/Library
+/Unity/CozyWinterJam2022/Temp
+/Unity/CozyWinterJam2022/UserSettings
+/Unity/CozyWinterJam2022/.vsconfig
+/Unity/CozyWinterJam2022/Assembly-CSharp.csproj
+/Unity/CozyWinterJam2022/CozyWinterJam2022.sln
