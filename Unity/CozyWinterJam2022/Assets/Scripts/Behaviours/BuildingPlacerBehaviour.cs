@@ -1,5 +1,7 @@
 namespace HNS.CozyWinterJam2022.Behaviours
 {
+    using System;
+    using System.Collections.Generic;
     using UnityEngine;
 
     [AddComponentMenu("CWJ2022/BuildingPlacer")]
@@ -8,9 +10,37 @@ namespace HNS.CozyWinterJam2022.Behaviours
     {        
         protected Plane GroundPlane { get; set; }
 
+        protected Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
+
         protected void Awake()
         {
+            Buildings = new Dictionary<Tuple<float, float>, BuildingBehaviour>();
             GroundPlane = new Plane(Vector3.up, 0);
+        }
+
+        protected void BuildBuilding(float x, float z)
+        {
+            var key = new Tuple<float, float>(x, z);
+
+            if (Buildings
+                .ContainsKey(key))
+            {
+                return;
+            }
+
+            var prefab = Resources.Load<BuildingBehaviour>("Prefabs/Building");
+
+            var building = Instantiate(prefab);
+
+            building.transform.position = transform.position;
+
+            building
+                .PositionProgressBar();
+
+            gameObject
+                .SetActive(false);
+
+            Buildings[key] = building;
         }
 
         protected void Update()
@@ -40,17 +70,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             if (Input
                 .GetMouseButtonDown(0))
             {
-                var prefab = Resources.Load<BuildingBehaviour>("Prefabs/Building");
-
-                var building = Instantiate(prefab);
-
-                building.transform.position = transform.position;
-                
-                building
-                    .PositionProgressBar();
-
-                gameObject
-                    .SetActive(false);
+                BuildBuilding(x, z);
             }
         }
     }
