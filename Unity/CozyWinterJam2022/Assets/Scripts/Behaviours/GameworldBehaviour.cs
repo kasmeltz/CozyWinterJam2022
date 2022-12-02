@@ -11,11 +11,16 @@ namespace HNS.CozyWinterJam2022.Behaviours
     {
         #region Members
 
+        public int MapWidth;
+        public int MapHeight;
+
         public Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
 
         public float[] Production { get; set; }
 
         public float[] Inventory { get; set; }
+
+        public int[,] WorldMap { get; set; }
 
         #endregion
 
@@ -97,6 +102,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             Production = new float[resources.Length];
             Inventory = new float[resources.Length];
+
+            WorldMap = new int[MapHeight, MapWidth];
         }
        
         #endregion
