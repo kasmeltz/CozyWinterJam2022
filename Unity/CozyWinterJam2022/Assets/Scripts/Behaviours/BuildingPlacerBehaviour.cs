@@ -31,6 +31,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 var building = Instantiate(prefab);
 
                 building.transform.position = transform.position;
+                
+                building
+                    .PositionProgressBar();
 
                 gameObject
                     .SetActive(false);

@@ -18,10 +18,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
             BuildProgress = 0;
         }
 
-        protected void Update()
+        public void PositionProgressBar()
         {
             var screenPoint = Camera.main.WorldToScreenPoint(transform.position);
             ProgressBarBackground.rectTransform.anchoredPosition = new Vector2(screenPoint.x, screenPoint.y) + ProgressBarOffset;
+        }
+
+        protected void Update()
+        {
 
             BuildProgress += Time.deltaTime;
 
