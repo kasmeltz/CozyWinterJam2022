@@ -6,7 +6,13 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
     public class BuildBuildingBehaviour : MonoBehaviour
     {
+        #region Members
+
         public BuildingPlacerBehaviour BuildingPlacer;
+
+        #endregion
+
+        #region Methods
 
         public void ClickBuildBuilding()
         {
@@ -15,5 +21,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .SetActive(true);
         }
 
+        #endregion
     }
 }

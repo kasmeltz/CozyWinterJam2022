@@ -7,10 +7,16 @@ namespace HNS.CozyWinterJam2022.Behaviours
     [AddComponentMenu("CWJ2022/BuildingPlacer")]
 
     public class BuildingPlacerBehaviour : MonoBehaviour
-    {        
+    {
+        #region Members
+        
         protected Plane GroundPlane { get; set; }
+
         protected GameworldBehaviour Gameworld { get; set; }
 
+        #endregion
+
+        #region Methods
 
         protected void Awake()
         {
@@ -81,5 +87,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     .SetActive(false);
             }
         }
+
+        #endregion
     }
 }
