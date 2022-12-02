@@ -45,6 +45,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         #region Methods
 
+        protected void OnMouseDown()
+        {
+            var buildingWorkerPabel = FindObjectOfType<BuildingWorkerPanelBehaviour>(true);
+
+            buildingWorkerPabel
+                .SetActiveBuilding(this);
+        }
+
         protected void Awake()
         {
             var workers = Enum

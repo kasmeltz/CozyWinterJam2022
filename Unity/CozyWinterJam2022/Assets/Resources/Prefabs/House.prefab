@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 4379623938577948944}
   - component: {fileID: 8509601678061549381}
   - component: {fileID: -704332461643433108}
+  - component: {fileID: -565370634557479258}
   m_Layer: 0
   m_Name: House
   m_TagString: Untagged
@@ -362,3 +363,16 @@ MonoBehaviour:
   - 1
   WorkersProducedCategories: 00000000
   WorkersProducedAmounts: 03000000
+--- !u!65 &-565370634557479258
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6417568436947456969}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
