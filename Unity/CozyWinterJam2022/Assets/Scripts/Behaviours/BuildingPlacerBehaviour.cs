@@ -10,24 +10,35 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             var mousePos = Input.mousePosition;
 
+            var mx = mousePos.x;
+            var my = mousePos.y;
+
+            var xGrid = Screen.width / 50.0f;
+            var x = -25 + (mx / xGrid);
+            x = Mathf
+                .Round(x);
+
             /*
-            float dz = transform.position.z - Camera.main.transform.position.z;
-            float dx = transform.position.x - Camera.main.transform.position.x;
-            float d = Mathf
-                .Sqrt((dx * dx) + (dz * dz));
+            var zGrid = Screen.width / 20.0f;
+            var z = -10 + (my / zGrid);
+            z = Mathf
+                .Round(z);
             */
 
-            var d = 10;
-
-            var worldPosition = Camera
-                .main
-                .ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, d));
-
+            /*
             var x = Mathf
                 .Round(worldPosition.x);
 
+            var y = Mathf
+                .Round(worldPosition.y);
+
             var z = Mathf
                 .Round(worldPosition.z);
+
+            
+            */
+
+            var z = 0;
 
             transform.position = new Vector3(x, 0, z);
 

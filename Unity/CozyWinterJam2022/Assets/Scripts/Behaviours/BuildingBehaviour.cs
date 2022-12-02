@@ -28,6 +28,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void Update()
         {
+            PositionProgressBar();
+
             BuildProgress += Time.deltaTime / 2;
 
             if (BuildProgress > 1)
