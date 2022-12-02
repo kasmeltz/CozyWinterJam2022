@@ -23,8 +23,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var key = new Tuple<float, float>(x, z);
 
             if (Gameworld
-                .Buildings
-                .ContainsKey(key))
+                .BuildingExists(key))
             {
                 return;
             }
@@ -41,7 +40,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
             gameObject
                 .SetActive(false);
 
-            Gameworld.Buildings[key] = building;
+            Gameworld
+                .AddBuilding(key, building);
         }
 
         protected void Update()

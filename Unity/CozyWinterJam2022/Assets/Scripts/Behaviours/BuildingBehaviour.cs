@@ -1,5 +1,6 @@
 namespace HNS.CozyWinterJam2022.Behaviours
 {
+    using System;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
     public class BuildingBehaviour : MonoBehaviour
     {
+        #region Members
+
         public Image ProgressBarBackground;
         public Image ProgressBarForeground;
         public Vector2 ProgressBarOffset;
@@ -16,6 +19,21 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public float BuildProgress { get; set; }
 
         public bool IsBuilt { get; set; }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler BuildComplete;
+        protected void OnBuildComplete()
+        {
+            BuildComplete?
+                .Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion
+
+        #region Methods
 
         protected void Awake()
         {
@@ -49,6 +67,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 ProgressBarBackground
                     .gameObject
                     .SetActive(false);
+
+                OnBuildComplete();
             }
 
             ProgressBarForeground.fillAmount = (BuildProgress / BuildSeconds);
@@ -59,5 +79,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             PositionProgressBar();
             UpdateProgessBar();
         }
+
+        #endregion
     }
 }
