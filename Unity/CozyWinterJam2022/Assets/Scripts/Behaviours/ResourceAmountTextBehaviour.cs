@@ -25,8 +25,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             var amount = Gameworld.Inventory[index];
 
-            TextObject.text = amount
-                .ToString("0.##");
+            TextObject.text = Mathf
+                .Round(amount)
+                .ToString();
         }
 
         protected void Awake()
