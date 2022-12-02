@@ -70,22 +70,27 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 var secondVertex = new Vector3(building.transform.position.x, -0.5f, building.transform.position.z);
 
                 float minDistance = float.MaxValue;
-                foreach (var otherBuilding in Buildings.Keys)
+                foreach (var kvp in Buildings)
                 {
-                    var dx = otherBuilding.Item1 - firstVertex.x;
-                    var dy = otherBuilding.Item2 - firstVertex.z;
+                    var otherCoordinates = kvp.Key;
+
+                    var dx = otherCoordinates.Item1 - firstVertex.x;
+                    var dy = otherCoordinates.Item2 - firstVertex.z;
 
                     var d = (dx * dx) + (dy * dy);
                     if (d > 0 && d < minDistance)
                     {
                         minDistance = d;
-                        secondVertex.x = otherBuilding.Item1;
-                        secondVertex.z = otherBuilding.Item2;
+                        secondVertex.x = otherCoordinates.Item1;
+                        secondVertex.z = otherCoordinates.Item2;
                     }
                 }
 
                 roads
                     .AddRoads(firstVertex, secondVertex);
+
+                roads
+                    .AddRoads(firstVertex, new Vector3(0,-0.5f,0));
             }
         }
 

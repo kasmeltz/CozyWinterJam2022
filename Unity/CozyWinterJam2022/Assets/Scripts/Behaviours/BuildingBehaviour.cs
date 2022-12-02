@@ -16,6 +16,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public Vector2 ProgressBarOffset;
         public float BuildSeconds;
         public float BuildSpeed;
+        public BuildingType BuildingType;
 
         public ProduceableResourceCategory[] ResourcesProducedCategories;
         public float[] ResourcesProducedAmounts;
