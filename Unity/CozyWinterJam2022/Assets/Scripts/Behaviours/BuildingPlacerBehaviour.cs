@@ -9,12 +9,12 @@ namespace HNS.CozyWinterJam2022.Behaviours
     public class BuildingPlacerBehaviour : MonoBehaviour
     {        
         protected Plane GroundPlane { get; set; }
+        protected GameworldBehaviour Gameworld { get; set; }
 
-        protected Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
 
         protected void Awake()
         {
-            Buildings = new Dictionary<Tuple<float, float>, BuildingBehaviour>();
+            Gameworld = FindObjectOfType<GameworldBehaviour>();
             GroundPlane = new Plane(Vector3.up, 0);
         }
 
@@ -22,7 +22,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             var key = new Tuple<float, float>(x, z);
 
-            if (Buildings
+            if (Gameworld
+                .Buildings
                 .ContainsKey(key))
             {
                 return;
@@ -40,7 +41,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             gameObject
                 .SetActive(false);
 
-            Buildings[key] = building;
+            Gameworld.Buildings[key] = building;
         }
 
         protected void Update()
@@ -71,6 +72,13 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .GetMouseButtonDown(0))
             {
                 BuildBuilding(x, z);
+            }
+
+            if (Input
+                .GetMouseButtonDown(1))
+            {
+                gameObject
+                    .SetActive(false);
             }
         }
     }
