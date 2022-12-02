@@ -11,17 +11,42 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public Image ProgressBarForeground;
         public Vector2 ProgressBarOffset;
 
-        public float BuildProgress;
+        public float BuildProgress { get; set; }
+        public bool IsBuilt { get; set; }
 
         protected void Awake()
         {
             BuildProgress = 0;
+            IsBuilt = false;
+            ProgressBarBackground
+                .gameObject
+                .SetActive(true);
         }
 
         public void PositionProgressBar()
         {
             var screenPoint = Camera.main.WorldToScreenPoint(transform.position);
             ProgressBarBackground.rectTransform.anchoredPosition = new Vector2(screenPoint.x, screenPoint.y) + ProgressBarOffset;
+            ProgressBarForeground.fillAmount = BuildProgress;            
+        }
+
+        public void UpdateProgessBar()
+        {
+            if (IsBuilt)
+            {
+                return;
+            }
+
+            BuildProgress += Time.deltaTime / 2;
+
+            if (BuildProgress > 1)
+            {
+                BuildProgress = 1;
+                IsBuilt = true;
+                ProgressBarBackground
+                    .gameObject
+                    .SetActive(false);
+            }
 
             ProgressBarForeground.fillAmount = BuildProgress;
         }
@@ -29,15 +54,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
         protected void Update()
         {
             PositionProgressBar();
-
-            BuildProgress += Time.deltaTime / 2;
-
-            if (BuildProgress > 1)
-            {
-                BuildProgress = 1;
-            }
-
-            ProgressBarForeground.fillAmount = BuildProgress;
+            UpdateProgessBar();
         }
     }
 }
