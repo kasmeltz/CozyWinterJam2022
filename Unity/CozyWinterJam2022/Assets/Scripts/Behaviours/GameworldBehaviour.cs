@@ -26,8 +26,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
 
-        public float[] Production { get; set; }
-
         public float[] Inventory { get; set; }
 
         public int[] AvailableWorkers { get; set; }
@@ -57,39 +55,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 var amount = building.WorkersProducedAmounts[i];
                 AvailableWorkers[categoryIndex] += amount;
             }
-
-            var cellX = (int)Mathf
-                .Round(building.transform.position.x + 25);
-
-            var cellY = (int)Mathf
-                .Round(building.transform.position.z + 25);
-
-            for (int cy = cellY - 1; cy <= cellY + 1; cy++)
-            {
-                for (int cx = cellX - 1; cx <= cellX + 1; cx++)
-                {
-                    if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
-                    {
-                        continue;
-                    }
-
-                    var mapValue = WorldMap[cy, cx];
-                    for (int i = 0; i < building.ResourcesProducedCategories.Length; i++)
-                    {
-                        var category = building.ResourcesProducedCategories[i];
-
-                        var categoryIndex = (int)category;
-                        if (mapValue != categoryIndex)
-                        {
-                            continue;
-                        }
-
-                        var amount = building.ResourcesProducedAmounts[i];
-                        Production[categoryIndex] += amount;
-                    }
-                }
-            }
-
+            
             if (Buildings.Count > 1)
             {
                 var roads = FindObjectOfType<RoadsBehaviour>();
@@ -153,7 +119,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
                     if (UnityEngine.Random.Range(0, 100) > 70)
                     {
-                        var resourceIndex = UnityEngine.Random.Range(0, Production.Length);
+                        var resourceIndex = UnityEngine.Random.Range(0, Inventory.Length);
 
                         var prefab = Resources
                             .Load<ResourceBehaviour>("Prefabs/Wood");
@@ -205,13 +171,52 @@ namespace HNS.CozyWinterJam2022.Behaviours
             UpdateCheerBar();
         }
 
+        protected void ProduceResources()
+        {
+            foreach (var building in Buildings.Values)
+            {
+                if (!building.IsBuilt)
+                {
+                    continue;
+                }
+
+                var cellX = (int)Mathf
+                    .Round(building.transform.position.x + 25);
+
+                var cellY = (int)Mathf
+                    .Round(building.transform.position.z + 25);
+
+                for (int cy = cellY - 1; cy <= cellY + 1; cy++)
+                {
+                    for (int cx = cellX - 1; cx <= cellX + 1; cx++)
+                    {
+                        if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
+                        {
+                            continue;
+                        }
+
+                        var mapValue = WorldMap[cy, cx];
+                        for (int i = 0; i < building.ResourcesProducedCategories.Length; i++)
+                        {
+                            var category = building.ResourcesProducedCategories[i];
+                            var categoryIndex = (int)category;
+                            if (mapValue != categoryIndex)
+                            {
+                                continue;
+                            }
+
+                            var amount = building.ResourcesProducedAmounts[i];
+                            Inventory[categoryIndex] += amount * Time.deltaTime;
+                        }
+                    }
+                }
+            }
+        }
+
         protected void Update()
         {
-            for (int i = 0; i < Production.Length; i++)
-            {
-                Inventory[i] += Production[i] * Time.deltaTime;
-            }
-            
+            ProduceResources();            
+
             YearTimeLeft -= Time.deltaTime * YearTimeSpeed;
             if (YearTimeLeft <= 0)
             {
@@ -226,7 +231,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var resources = Enum
                 .GetValues(typeof(ProduceableResourceCategory));
 
-            Production = new float[resources.Length];
             Inventory = new float[resources.Length];
 
             var workers = Enum

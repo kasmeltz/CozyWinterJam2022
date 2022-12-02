@@ -29,7 +29,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public bool IsBuilt { get; set; }
 
         public int[] WorkersPresent { get; set; }
-
+        
         #endregion
 
         #region Events
