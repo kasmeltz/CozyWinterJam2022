@@ -18,6 +18,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
             x = Mathf
                 .Round(x);
 
+            var z = 0;
+
             /*
             var zGrid = Screen.width / 20.0f;
             var z = -10 + (my / zGrid);
@@ -38,7 +40,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             
             */
 
-            var z = 0;
+            //var z = 0;
 
             transform.position = new Vector3(x, 0, z);
 
