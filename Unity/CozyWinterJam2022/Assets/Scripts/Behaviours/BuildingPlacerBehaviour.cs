@@ -71,6 +71,24 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var z = Mathf
                 .Round(worldPosition.z);
 
+            if (x < -25)
+            {
+                x = -25;
+            }
+            else if (x > 25)
+            {
+                x = 25;
+            }
+
+            if ( z < -25)
+            {
+                z = -25;
+            }            
+            else if (z > 25)
+            {
+                z = 25;
+            }
+
             transform.position = new Vector3(x, 0, z);
 
             if (Input

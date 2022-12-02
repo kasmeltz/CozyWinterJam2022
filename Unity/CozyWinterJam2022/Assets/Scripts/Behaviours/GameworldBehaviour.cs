@@ -30,13 +30,36 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             var building = (BuildingBehaviour)sender;
 
-            for (int i = 0; i < building.ResourcesProducedCategories.Length; i++)
-            {
-                var category = building.ResourcesProducedCategories[i];
-                var amount = building.ResourcesProducedAmounts[i];
+            var cellX = (int)Mathf
+                .Round(building.transform.position.x + 25);
 
-                var categoryIndex = (int)category;
-                Production[categoryIndex] += amount;
+            var cellY = (int)Mathf
+                .Round(building.transform.position.z + 25);
+
+            for (int cy = cellY - 1; cy <= cellY + 1; cy++)
+            {
+                for (int cx = cellX - 1; cx <= cellX + 1; cx++)
+                {
+                    if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
+                    {
+                        continue;
+                    }
+
+                    var mapValue = WorldMap[cy, cx];
+                    for (int i = 0; i < building.ResourcesProducedCategories.Length; i++)
+                    {
+                        var category = building.ResourcesProducedCategories[i];
+
+                        var categoryIndex = (int)category;
+                        if (mapValue != categoryIndex)
+                        {
+                            continue;
+                        }
+
+                        var amount = building.ResourcesProducedAmounts[i];
+                        Production[categoryIndex] += amount;
+                    }
+                }
             }
 
             if (Buildings.Count > 1)
@@ -93,8 +116,12 @@ namespace HNS.CozyWinterJam2022.Behaviours
             {
                 for (int x = 0; x < MapWidth; x++)
                 {
+                    WorldMap[z, x] = -1;
+
                     if (UnityEngine.Random.Range(0, 100) > 70)
                     {
+                        var resourceIndex = UnityEngine.Random.Range(0, Production.Length);
+
                         var prefab = Resources
                             .Load<ResourceBehaviour>("Prefabs/Wood");
 
@@ -102,7 +129,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                         resourceObject.transform.position = new Vector3(x - 25, 0, z - 25);
                         resourceObject.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 
-                        WorldMap[z, x] = 1;
+                        WorldMap[z, x] = resourceIndex;
                     }
                 }
             }
