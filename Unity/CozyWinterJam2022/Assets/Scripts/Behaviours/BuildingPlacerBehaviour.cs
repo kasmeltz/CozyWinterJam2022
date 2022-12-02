@@ -6,41 +6,34 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
     public class BuildingPlacerBehaviour : MonoBehaviour
     {        
-        protected void Update()
+        protected Plane GroundPlane { get; set; }
+
+        protected void Awake()
         {
-            var mousePos = Input.mousePosition;
+            GroundPlane = new Plane(Vector3.up, 0);
+        }
 
-            var mx = mousePos.x;
-            var my = mousePos.y;
+        protected void Update()
+        {            
+            var worldPosition = transform.position;
+            
+            float distance;
+            Ray ray = Camera
+                .main
+                .ScreenPointToRay(Input.mousePosition);
 
-            var xGrid = Screen.width / 50.0f;
-            var x = -25 + (mx / xGrid);
-            x = Mathf
-                .Round(x);
+            if (GroundPlane
+                .Raycast(ray, out distance))
+            {
+                worldPosition = ray
+                    .GetPoint(distance);
+            }
 
-            var z = 0;
-
-            /*
-            var zGrid = Screen.width / 20.0f;
-            var z = -10 + (my / zGrid);
-            z = Mathf
-                .Round(z);
-            */
-
-            /*
             var x = Mathf
                 .Round(worldPosition.x);
 
-            var y = Mathf
-                .Round(worldPosition.y);
-
             var z = Mathf
                 .Round(worldPosition.z);
-
-            
-            */
-
-            //var z = 0;
 
             transform.position = new Vector3(x, 0, z);
 
