@@ -180,6 +180,33 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     continue;
                 }
 
+                bool allRequiredResourcesOnHand = true;
+                for(int i = 0;i < building.ResourcesConsumedCategories.Length;i++)
+                {
+                    var category = building.ResourcesConsumedCategories[i];
+                    var categoryIndex = (int)category;
+                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime;
+
+                    if (amount > Inventory[categoryIndex])
+                    {
+                        allRequiredResourcesOnHand = false;
+                        break;
+                    }
+                }
+
+                if (!allRequiredResourcesOnHand)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < building.ResourcesConsumedCategories.Length; i++)
+                {
+                    var category = building.ResourcesConsumedCategories[i];
+                    var categoryIndex = (int)category;
+                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime;
+                    Inventory[categoryIndex] -= amount;
+                }
+
                 var cellX = (int)Mathf
                     .Round(building.transform.position.x + 25);
 

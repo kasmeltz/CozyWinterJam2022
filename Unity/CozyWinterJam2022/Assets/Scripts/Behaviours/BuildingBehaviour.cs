@@ -21,6 +21,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public ProduceableResourceCategory[] ResourcesProducedCategories;
         public float[] ResourcesProducedAmounts;
 
+        public ProduceableResourceCategory[] ResourcesConsumedCategories;
+        public float[] ResourcesConsumedAmounts;
+
         public WorkerCategory[] WorkersProducedCategories;
         public int[] WorkersProducedAmounts;
 
