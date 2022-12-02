@@ -357,7 +357,8 @@ MonoBehaviour:
   BuildSeconds: 10
   BuildSpeed: 1
   BuildingType: 1
-  ResourcesProducedCategories: 
-  ResourcesProducedAmounts: []
+  ResourcesProducedCategories: 00000000
+  ResourcesProducedAmounts:
+  - 1
   WorkersProducedCategories: 00000000
   WorkersProducedAmounts: 03000000
