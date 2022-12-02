@@ -32,29 +32,17 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public void AddWorker(int workerType)
         {
-            Debug
-                .Log("IS SELECTED BUILDING NULL");
-
             if (SelectedBuilding == null)
             {
                 return;
             }
             
-            Debug
-                .Log("SELECTED WORKER IS NOT NULL");
-
             var available = Gameworld.AvailableWorkers[workerType];
-
-            Debug
-                .Log($"WORKERS AVAILABLE {available}");
 
             if (available <= 0)
             {
                 return;
             }
-
-            Debug
-                .Log($"ADJUSTING WORKERS!");
 
             Gameworld.AvailableWorkers[workerType]--;
             SelectedBuilding.WorkersPresent[workerType]++;
