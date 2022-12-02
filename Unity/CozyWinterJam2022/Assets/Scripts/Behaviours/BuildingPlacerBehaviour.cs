@@ -26,15 +26,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void BuildBuilding(float x, float z)
         {
-            var key = new Tuple<float, float>(x, z);
-
             if (Gameworld
-                .BuildingExists(key))
+                .BuildingExists(x, z))
             {
                 return;
             }
 
-            var prefab = Resources.Load<BuildingBehaviour>("Prefabs/Building");
+            var prefab = Resources
+                .Load<BuildingBehaviour>("Prefabs/Building");
 
             var building = Instantiate(prefab);
 
@@ -47,7 +46,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .SetActive(false);
 
             Gameworld
-                .AddBuilding(key, building);
+                .AddBuilding(x, z, building);
         }
 
         protected void Update()

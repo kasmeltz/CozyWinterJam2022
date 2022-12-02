@@ -65,14 +65,17 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         #region Methods
 
-        public bool BuildingExists(Tuple<float, float> key)
+        public bool BuildingExists(float x, float z)
         {
+            var key = new Tuple<float, float>(x, z);
+
             return Buildings
                 .ContainsKey(key);
         }
 
-        public void AddBuilding(Tuple<float, float> key, BuildingBehaviour building)
+        public void AddBuilding(float x, float z, BuildingBehaviour building)
         {
+            var key = new Tuple<float, float>(x, z);
             Buildings[key] = building;
             building.BuildComplete += Building_BuildComplete;
         }
