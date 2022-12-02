@@ -21,9 +21,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public ProduceableResourceCategory[] ResourcesProducedCategories;
         public float[] ResourcesProducedAmounts;
 
+        public WorkerCategory[] WorkersProducedCategories;
+        public int[] WorkersProducedAmounts;
+
         public float BuildProgress { get; set; }
 
         public bool IsBuilt { get; set; }
+
+        public int[] WorkersPresent { get; set; }
 
         #endregion
 
@@ -42,6 +47,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void Awake()
         {
+            var workers = Enum
+               .GetValues(typeof(WorkerCategory));
+
+            WorkersPresent = new int[workers.Length];
+
             BuildProgress = 0;
             IsBuilt = false;
             ProgressBarBackground

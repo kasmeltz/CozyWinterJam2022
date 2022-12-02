@@ -4,6 +4,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
     using System;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.UI;
 
     [AddComponentMenu("CWJ2022/Gameworld")]
 
@@ -14,13 +15,32 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public int MapWidth;
         public int MapHeight;
 
+        public float YearTimeToStart;
+        public float YearTimeSpeed;
+
+        public float MaxChristmasCheer;
+        public float StartingChristmasCheer;
+        public float ChristmasCheerPerYearEnd;
+
+        public Image ChristmasCheerbar;
+
         public Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
 
         public float[] Production { get; set; }
 
         public float[] Inventory { get; set; }
 
+        public int[] AvailableWorkers { get; set; }
+      
         public int[,] WorldMap { get; set; }
+
+        public float ChristmasCheer { get; set; }
+
+        public float YearTimeLeft { get; set; }
+
+        public float Year { get; set; }
+
+        public List<Tuple<ProduceableResourceCategory, float>> CurrentYearEndGoals { get; set; }
 
         #endregion
 
@@ -29,6 +49,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
         private void Building_BuildComplete(object sender, EventArgs e)
         {
             var building = (BuildingBehaviour)sender;
+
+            for (int i = 0; i < building.WorkersProducedCategories.Length; i++)
+            {
+                var category = building.WorkersProducedCategories[i];
+                var categoryIndex = (int)category;
+                var amount = building.WorkersProducedAmounts[i];
+                AvailableWorkers[categoryIndex] += amount;
+            }
 
             var cellX = (int)Mathf
                 .Round(building.transform.position.x + 25);
@@ -140,11 +168,54 @@ namespace HNS.CozyWinterJam2022.Behaviours
             }
         }
 
+        protected void UpdateCheerBar()
+        {
+            var ratio = ChristmasCheer / MaxChristmasCheer;
+
+            ChristmasCheerbar.fillAmount = ratio;
+        }
+
+        protected void DoEndOfYear()
+        {
+            bool passedYear = true;
+            foreach(var tuple in CurrentYearEndGoals)
+            {
+                var resourceCategory = tuple.Item1;
+                var resourceCategoryIndex = (int)resourceCategory;
+                var amountRequired = tuple.Item2;
+
+                var amountOnHand = Inventory[resourceCategoryIndex];
+                if (amountOnHand < amountRequired)
+                {
+                    passedYear = false;
+                }
+
+                Inventory[resourceCategoryIndex] -= amountRequired;
+            }
+
+            if (passedYear)
+            {
+                ChristmasCheer += ChristmasCheerPerYearEnd;
+            }
+            else
+            {
+                ChristmasCheer -= ChristmasCheerPerYearEnd;
+            }
+
+            UpdateCheerBar();
+        }
+
         protected void Update()
         {
             for (int i = 0; i < Production.Length; i++)
             {
                 Inventory[i] += Production[i] * Time.deltaTime;
+            }
+            
+            YearTimeLeft -= Time.deltaTime * YearTimeSpeed;
+            if (YearTimeLeft <= 0)
+            {
+                DoEndOfYear();
             }
         }
 
@@ -158,6 +229,19 @@ namespace HNS.CozyWinterJam2022.Behaviours
             Production = new float[resources.Length];
             Inventory = new float[resources.Length];
 
+            var workers = Enum
+               .GetValues(typeof(WorkerCategory));
+
+            AvailableWorkers = new int[workers.Length];
+
+            YearTimeLeft = YearTimeToStart;
+            Year = 0;
+
+            CurrentYearEndGoals = new List<Tuple<ProduceableResourceCategory, float>>();
+
+            ChristmasCheer = StartingChristmasCheer;
+
+            UpdateCheerBar();
             CreateWorldMap();            
         }
        

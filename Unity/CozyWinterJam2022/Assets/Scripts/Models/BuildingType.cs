@@ -3,5 +3,6 @@
     public enum BuildingType
     {
         SantasWorkshop = 0,
+        House = 1
     }
 }

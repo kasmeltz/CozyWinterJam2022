@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 8509601678061549381}
   - component: {fileID: -704332461643433108}
   m_Layer: 0
-  m_Name: Building
+  m_Name: House
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -356,6 +356,8 @@ MonoBehaviour:
   ProgressBarOffset: {x: -50, y: -40}
   BuildSeconds: 10
   BuildSpeed: 1
-  ResourcesProducedCategories: 00000000
-  ResourcesProducedAmounts:
-  - 5
+  BuildingType: 1
+  ResourcesProducedCategories: 
+  ResourcesProducedAmounts: []
+  WorkersProducedCategories: 00000000
+  WorkersProducedAmounts: 03000000

@@ -1,5 +1,6 @@
 namespace HNS.CozyWinterJam2022.Behaviours
 {
+    using HNS.CozyWinterJam2022.Models;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -9,7 +10,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
     public class BuildingPlacerBehaviour : MonoBehaviour
     {
         #region Members
-        
+
+        public BuildingType TypeToBuild { get; set; }
+
         protected Plane GroundPlane { get; set; }
 
         protected GameworldBehaviour Gameworld { get; set; }
@@ -32,8 +35,20 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 return;
             }
 
+            string prefabeName = "";
+            switch(TypeToBuild)
+            {
+                case BuildingType.SantasWorkshop:
+                    prefabeName = "SantasWorkshop";
+                    break;
+
+                case BuildingType.House:
+                    prefabeName = "House";
+                    break;
+            }
+
             var prefab = Resources
-                .Load<BuildingBehaviour>("Prefabs/Building");
+                .Load<BuildingBehaviour>($"Prefabs/{prefabeName}");
 
             var building = Instantiate(prefab);
 
