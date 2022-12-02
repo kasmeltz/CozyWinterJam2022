@@ -10,10 +10,18 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             var mousePos = Input.mousePosition;
 
-            float distance = 10;
+            /*
+            float dz = transform.position.z - Camera.main.transform.position.z;
+            float dx = transform.position.x - Camera.main.transform.position.x;
+            float d = Mathf
+                .Sqrt((dx * dx) + (dz * dz));
+            */
+
+            var d = 10;
+
             var worldPosition = Camera
                 .main
-                .ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, distance));
+                .ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, d));
 
             var x = Mathf
                 .Round(worldPosition.x);
