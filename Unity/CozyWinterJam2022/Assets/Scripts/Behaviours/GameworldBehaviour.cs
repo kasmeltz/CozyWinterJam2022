@@ -85,6 +85,29 @@ namespace HNS.CozyWinterJam2022.Behaviours
             building.BuildComplete += Building_BuildComplete;
         }
 
+        protected void CreateWorldMap()
+        {
+            WorldMap = new int[MapHeight, MapWidth];
+
+            for (int z = 0; z < MapHeight; z++)
+            {
+                for (int x = 0; x < MapWidth; x++)
+                {
+                    if (UnityEngine.Random.Range(0, 100) > 70)
+                    {
+                        var prefab = Resources
+                            .Load<ResourceBehaviour>("Prefabs/Wood");
+
+                        var resourceObject = Instantiate(prefab);
+                        resourceObject.transform.position = new Vector3(x - 25, 0, z - 25);
+                        resourceObject.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+                        WorldMap[z, x] = 1;
+                    }
+                }
+            }
+        }
+
         protected void Update()
         {
             for (int i = 0; i < Production.Length; i++)
@@ -103,7 +126,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             Production = new float[resources.Length];
             Inventory = new float[resources.Length];
 
-            WorldMap = new int[MapHeight, MapWidth];
+            CreateWorldMap();            
         }
        
         #endregion
