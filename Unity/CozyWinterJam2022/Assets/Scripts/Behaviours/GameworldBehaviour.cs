@@ -38,7 +38,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public float Year { get; set; }
 
+        public List<List<Tuple<ProduceableResourceCategory, float>>> AllYearEndGoals { get; set; }
+
         public List<Tuple<ProduceableResourceCategory, float>> CurrentYearEndGoals { get; set; }
+
+        protected ToDoListBehaviour ToDoList { get; set; }
 
         #endregion
 
@@ -248,6 +252,15 @@ namespace HNS.CozyWinterJam2022.Behaviours
             }
         }
 
+        protected void StartNewYear(int year)
+        {
+            CurrentYearEndGoals = AllYearEndGoals[0];
+            Year = year;
+
+            ToDoList
+                .SetGoals(CurrentYearEndGoals);
+        }
+
         protected void Update()
         {
             ProduceResources();            
@@ -273,10 +286,20 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             AvailableWorkers = new int[workers.Length];
 
-            YearTimeLeft = YearTimeToStart;
-            Year = 0;
+            YearTimeLeft = YearTimeToStart;            
 
-            CurrentYearEndGoals = new List<Tuple<ProduceableResourceCategory, float>>();
+            AllYearEndGoals = new List<List<Tuple<ProduceableResourceCategory, float>>>();
+
+            var firstYearGoals = new List<Tuple<ProduceableResourceCategory, float>>();
+            firstYearGoals
+                .Add(new Tuple<ProduceableResourceCategory, float>(ProduceableResourceCategory.SimplePresent, 5));
+
+            AllYearEndGoals
+                .Add(firstYearGoals);
+
+            ToDoList = FindObjectOfType<ToDoListBehaviour>();
+
+            StartNewYear(0);
 
             ChristmasCheer = StartingChristmasCheer;
 
