@@ -205,7 +205,15 @@ namespace HNS.CozyWinterJam2022.Behaviours
                                 continue;
                             }
 
+                            // TO DO - HOW DO DIFFERENT WORKERS AFFECT THE PRODUCTION?
+                            var workers = building.WorkersPresent[0];
+
                             var amount = building.ResourcesProducedAmounts[i];
+
+                            // TO DO - HOW DO MORE WORKERS EFFECT PRODUCTION?
+                            var workerBonus = amount * workers;
+                            amount += workerBonus;
+
                             Inventory[categoryIndex] += amount * Time.deltaTime;
                         }
                     }
