@@ -361,6 +361,8 @@ MonoBehaviour:
   ResourcesProducedCategories: 00000000
   ResourcesProducedAmounts:
   - 1
+  ResourcesConsumedCategories: 
+  ResourcesConsumedAmounts: []
   WorkersProducedCategories: 00000000
   WorkersProducedAmounts: 03000000
 --- !u!65 &-565370634557479258
