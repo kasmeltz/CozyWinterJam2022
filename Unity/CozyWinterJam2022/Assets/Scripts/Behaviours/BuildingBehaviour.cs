@@ -10,8 +10,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public Image ProgressBarBackground;
         public Image ProgressBarForeground;
         public Vector2 ProgressBarOffset;
+        public float BuildSeconds;
+        public float BuildSpeed;
 
         public float BuildProgress { get; set; }
+
         public bool IsBuilt { get; set; }
 
         protected void Awake()
@@ -37,18 +40,18 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 return;
             }
 
-            BuildProgress += Time.deltaTime / 2;
+            BuildProgress += Time.deltaTime * BuildSpeed;
 
-            if (BuildProgress > 1)
+            if (BuildProgress >= BuildSeconds)
             {
-                BuildProgress = 1;
+                BuildProgress = BuildSeconds;
                 IsBuilt = true;
                 ProgressBarBackground
                     .gameObject
                     .SetActive(false);
             }
 
-            ProgressBarForeground.fillAmount = BuildProgress;
+            ProgressBarForeground.fillAmount = (BuildProgress / BuildSeconds);
         }
 
         protected void Update()
