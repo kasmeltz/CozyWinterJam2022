@@ -1,5 +1,6 @@
 namespace HNS.CozyWinterJam2022.Behaviours
 {
+    using HNS.CozyWinterJam2022.Models;
     using System;
     using System.Collections.Generic;
     using UnityEngine;
@@ -12,13 +13,26 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
 
+        public float[] Production { get; set; }
+
+        public float[] Inventory { get; set; }
+
         #endregion
 
         #region Event Handlers
 
         private void Building_BuildComplete(object sender, EventArgs e)
         {
-            // do something when building is built
+            var building = (BuildingBehaviour)sender;
+
+            for (int i = 0; i < building.ResourcesProducedCategories.Length; i++)
+            {
+                var category = building.ResourcesProducedCategories[i];
+                var amount = building.ResourcesProducedAmounts[i];
+
+                var categoryIndex = (int)category;
+                Production[categoryIndex] += amount;
+            }
         }
 
         #endregion
@@ -35,11 +49,25 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             Buildings[key] = building;
             building.BuildComplete += Building_BuildComplete;
-        }       
+        }
+
+        protected void Update()
+        {
+            for (int i = 0; i < Production.Length; i++)
+            {
+                Inventory[i] += Production[i] * Time.deltaTime;
+            }
+        }
 
         protected void Awake()
         {
             Buildings = new Dictionary<Tuple<float, float>, BuildingBehaviour>();
+
+            var resources = Enum
+                .GetValues(typeof(ProduceableResourceCategory));
+
+            Production = new float[resources.Length];
+            Inventory = new float[resources.Length];
         }
        
         #endregion

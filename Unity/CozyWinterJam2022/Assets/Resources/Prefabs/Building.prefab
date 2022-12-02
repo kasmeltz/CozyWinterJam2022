@@ -354,5 +354,8 @@ MonoBehaviour:
   ProgressBarBackground: {fileID: 4639352604432250991}
   ProgressBarForeground: {fileID: 1307370189428049861}
   ProgressBarOffset: {x: -50, y: -40}
-  BuildSeconds: 5
+  BuildSeconds: 10
   BuildSpeed: 1
+  ResourcesProducedCategories: 00000000
+  ResourcesProducedAmounts:
+  - 5

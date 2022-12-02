@@ -1,5 +1,6 @@
 namespace HNS.CozyWinterJam2022.Behaviours
 {
+    using HNS.CozyWinterJam2022.Models;
     using System;
     using UnityEngine;
     using UnityEngine.UI;
@@ -15,6 +16,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public Vector2 ProgressBarOffset;
         public float BuildSeconds;
         public float BuildSpeed;
+
+        public ProduceableResourceCategory[] ResourcesProducedCategories;
+        public float[] ResourcesProducedAmounts;
 
         public float BuildProgress { get; set; }
 
