@@ -33,6 +33,32 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 var categoryIndex = (int)category;
                 Production[categoryIndex] += amount;
             }
+
+            if (Buildings.Count > 1)
+            {
+                var roads = FindObjectOfType<RoadsBehaviour>();
+
+                var firstVertex = new Vector3(building.transform.position.x, -0.5f, building.transform.position.z);
+                var secondVertex = new Vector3(building.transform.position.x, -0.5f, building.transform.position.z);
+
+                float minDistance = float.MaxValue;
+                foreach (var otherBuilding in Buildings.Keys)
+                {
+                    var dx = otherBuilding.Item1 - firstVertex.x;
+                    var dy = otherBuilding.Item2 - firstVertex.z;
+
+                    var d = (dx * dx) + (dy * dy);
+                    if (d > 0 && d < minDistance)
+                    {
+                        minDistance = d;
+                        secondVertex.x = otherBuilding.Item1;
+                        secondVertex.z = otherBuilding.Item2;
+                    }
+                }
+
+                roads
+                    .AddRoads(firstVertex, secondVertex);
+            }
         }
 
         #endregion
