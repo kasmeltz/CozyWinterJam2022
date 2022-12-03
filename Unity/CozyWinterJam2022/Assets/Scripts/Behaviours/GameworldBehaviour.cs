@@ -86,7 +86,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
                             continue;
                         }
 
-                        if (cx == cellX && cy == cellY)
+                        if (cx == cellX && 
+                            cy == cellY)
                         {
                             continue;
                         }
@@ -289,7 +290,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
                         continue;
                     }
 
-                    if (cx == cellX || cy == cellY)
+                    if (cx == cellX && 
+                        cy == cellY)
                     {
                         continue;
                     }
@@ -339,7 +341,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
                         continue;
                     }
 
-                    if (cx == cellX || cy == cellY)
+                    if (cx == cellX && 
+                        cy == cellY)
                     {
                         continue;
                     }
