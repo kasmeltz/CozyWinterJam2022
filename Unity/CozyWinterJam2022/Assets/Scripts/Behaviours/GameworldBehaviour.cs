@@ -402,11 +402,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
             {
                 [BuildingType.Lumbercamp] = true,
                 [BuildingType.ElfHouse] = true,
-                [BuildingType.Farm] = false,
+                [BuildingType.Farm] = true,
                 [BuildingType.HuntingLodge] = false,
-                [BuildingType.GingerbreadQuarry] = false,
+                [BuildingType.GingerbreadQuarry] = true,
                 [BuildingType.CoalMine] = false,
-                [BuildingType.Workshop1] = false,
+                [BuildingType.Workshop1] = true,
                 [BuildingType.Workshop2] = false,
                 [BuildingType.Workshop3] = false,
                 [BuildingType.Refinery] = false
