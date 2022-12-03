@@ -279,12 +279,15 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     continue;
                 }
 
+                // TO DO - HOW DO DIFFERENT WORKERS AFFECT THE PRODUCTION?
+                var workers = building.WorkersPresent[0];
+
                 bool allRequiredResourcesOnHand = true;
                 for(int i = 0;i < building.ResourcesConsumedCategories.Length;i++)
                 {
                     var category = building.ResourcesConsumedCategories[i];
                     var categoryIndex = (int)category;
-                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime;
+                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime * workers;
 
                     if (amount > Inventory[categoryIndex])
                     {
@@ -302,7 +305,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 {
                     var category = building.ResourcesConsumedCategories[i];
                     var categoryIndex = (int)category;
-                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime;
+                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime * workers;
                     Inventory[categoryIndex] -= amount;
                 }
 
@@ -336,10 +339,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
                     // TO DO - HOW DO DIFFERENT RESOURCES AROUND THE BUILDING AFFECT THE PRODUCTION?
                     var amount = building.ResourcesProducedAmounts[i];
-                    amount *= resourcesFound;
-
-                    // TO DO - HOW DO DIFFERENT WORKERS AFFECT THE PRODUCTION?
-                    var workers = building.WorkersPresent[0];
+                    amount *= resourcesFound;                    
 
                     // TO DO - HOW DO MORE WORKERS EFFECT PRODUCTION?
                     var workerBonus = amount * workers;
