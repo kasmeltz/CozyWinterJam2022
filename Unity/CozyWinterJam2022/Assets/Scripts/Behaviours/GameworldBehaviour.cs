@@ -3,6 +3,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
     using HNS.CozyWinterJam2022.Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -22,6 +23,36 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public float ChristmasCheerPerYearEnd;
 
         public Image ChristmasCheerbar;
+
+        public ProduceableResourceCategory[] LumbercampResourceCostCategories;
+        public float[] LumbercampResourceCostAmounts;
+
+        public ProduceableResourceCategory[] ElfHouseResourceCostCategories;
+        public float[] ElfHouseResourceCostAmounts;
+
+        public ProduceableResourceCategory[] FarmResourceCostCategories;
+        public float[] FarmResourceCostAmounts;
+
+        public ProduceableResourceCategory[] HuntingLodgeResourceCostCategories;
+        public float[] HuntingLodgeResourceCostAmounts;
+
+        public ProduceableResourceCategory[] GingerbreadQuarryResourceCostCategories;
+        public float[] GingerbreadQuarryResourceCostAmounts;
+
+        public ProduceableResourceCategory[] CoalMineResourceCostCategories;
+        public float[] CoalMineResourceCostAmounts;
+
+        public ProduceableResourceCategory[] Workshop1ResourceCostCategories;
+        public float[] Workshop1ResourceCostAmounts;
+
+        public ProduceableResourceCategory[] Workshop2ResourceCostCategories;
+        public float[] Workshop2ResourceCostAmounts;
+
+        public ProduceableResourceCategory[] Workshop3ResourceCostCategories;
+        public float[] Workshop3ResourceCostAmounts;
+
+        public ProduceableResourceCategory[] RefineryResourceCostCategories;
+        public float[] RefineryResourceCostAmounts;
 
         public Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
 
@@ -45,6 +76,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; }
 
+        
         protected Dictionary<BuildingType, List<ProduceableResourceCategory>> BuildingResourceCostCategories { get; set; }
         
         protected Dictionary<BuildingType, List<float>> BuildingResourceCostAmounts { get; set; }
@@ -97,13 +129,13 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     //.AddRoads(firstVertex, new Vector3(0,-0.5f,0));
             }
             */
-        }
+    }
 
-        #endregion
+    #endregion
 
-        #region Methods
+    #region Methods
 
-        public bool BuildingExists(float x, float z)
+    public bool BuildingExists(float x, float z)
         {
             var key = new Tuple<float, float>(x, z);
 
@@ -383,26 +415,35 @@ namespace HNS.CozyWinterJam2022.Behaviours
             BuildingResourceCostCategories = new Dictionary<BuildingType, List<ProduceableResourceCategory>>();
             BuildingResourceCostAmounts = new Dictionary<BuildingType, List<float>>();
 
-            BuildingResourceCostCategories[BuildingType.Lumbercamp] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.Lumbercamp] = new List<float> { };
-            BuildingResourceCostCategories[BuildingType.ElfHouse] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.ElfHouse] = new List<float> { };
-            BuildingResourceCostCategories[BuildingType.Farm] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.Farm] = new List<float> { };
-            BuildingResourceCostCategories[BuildingType.HuntingLodge] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.HuntingLodge] = new List<float> { };
-            BuildingResourceCostCategories[BuildingType.GingerbreadQuarry] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.GingerbreadQuarry] = new List<float> { };
-            BuildingResourceCostCategories[BuildingType.CoalMine] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.CoalMine] = new List<float> { };
-            BuildingResourceCostCategories[BuildingType.Workshop1] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.Workshop1] = new List<float> { };
-            BuildingResourceCostCategories[BuildingType.Workshop2] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.Workshop2] = new List<float> { };
-            BuildingResourceCostCategories[BuildingType.Workshop3] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.Workshop3] = new List<float> { };
-            BuildingResourceCostCategories[BuildingType.Refinery] = new List<ProduceableResourceCategory> { };
-            BuildingResourceCostAmounts[BuildingType.Refinery] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Lumbercamp] = LumbercampResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.Lumbercamp] = LumbercampResourceCostAmounts.ToList();
+
+            BuildingResourceCostCategories[BuildingType.ElfHouse] = ElfHouseResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.ElfHouse] = ElfHouseResourceCostAmounts.ToList();
+
+            BuildingResourceCostCategories[BuildingType.Farm] = FarmResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.Farm] = FarmResourceCostAmounts.ToList();
+           
+            BuildingResourceCostCategories[BuildingType.HuntingLodge] = HuntingLodgeResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.HuntingLodge] = HuntingLodgeResourceCostAmounts.ToList();
+
+            BuildingResourceCostCategories[BuildingType.GingerbreadQuarry] = GingerbreadQuarryResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.GingerbreadQuarry] = GingerbreadQuarryResourceCostAmounts.ToList();
+
+            BuildingResourceCostCategories[BuildingType.CoalMine] = CoalMineResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.CoalMine] = CoalMineResourceCostAmounts.ToList();
+
+            BuildingResourceCostCategories[BuildingType.Workshop1] = Workshop1ResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.Workshop1] = Workshop1ResourceCostAmounts.ToList();
+
+            BuildingResourceCostCategories[BuildingType.Workshop2] = Workshop2ResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.Workshop2] = Workshop2ResourceCostAmounts.ToList();
+
+            BuildingResourceCostCategories[BuildingType.Workshop3] = Workshop3ResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.Workshop3] = Workshop3ResourceCostAmounts.ToList();
+
+            BuildingResourceCostCategories[BuildingType.Refinery] = RefineryResourceCostCategories.ToList();
+            BuildingResourceCostAmounts[BuildingType.Refinery] = RefineryResourceCostAmounts.ToList();
 
             Buildings = new Dictionary<Tuple<float, float>, BuildingBehaviour>();
 
