@@ -60,6 +60,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 AvailableWorkers[categoryIndex] += amount;
             }
             
+            /*
             if (Buildings.Count > 1)
             {
                 var roads = FindObjectOfType<RoadsBehaviour>();
@@ -87,9 +88,10 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 roads
                     .AddRoads(firstVertex, secondVertex);
 
-                roads
-                    .AddRoads(firstVertex, new Vector3(0,-0.5f,0));
+                //roads
+                    //.AddRoads(firstVertex, new Vector3(0,-0.5f,0));
             }
+            */
         }
 
         #endregion
@@ -115,6 +117,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             WorldMap = new int[MapHeight, MapWidth];
 
+            List<ProduceableResourceCategory> potentialResources = new List<ProduceableResourceCategory>
+            {
+                ProduceableResourceCategory.Wood,
+                ProduceableResourceCategory.Gingerbread,
+                ProduceableResourceCategory.Coal,
+                ProduceableResourceCategory.Steel,
+            };
+
             for (int z = 0; z < MapHeight; z++)
             {
                 for (int x = 0; x < MapWidth; x++)
@@ -123,8 +133,12 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
                     if (UnityEngine.Random.Range(0, 100) > 70)
                     {
-                        var resourceIndex = UnityEngine.Random.Range(0, Inventory.Length);
-                        var resourceType = (ProduceableResourceCategory)resourceIndex;
+                        var resourceIndex = UnityEngine
+                            .Random
+                            .Range(0, potentialResources.Count);
+
+                        var resourceType = potentialResources[resourceIndex];
+                        var resourceTypeIndex = (int)resourceType;
 
                         var prefab = Resources
                             .Load<ResourceBehaviour>($"Prefabs/Resources/{resourceType}");
@@ -133,7 +147,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                         resourceObject.transform.position = new Vector3(x - 25, 0, z - 25);
                         resourceObject.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 
-                        WorldMap[z, x] = resourceIndex;
+                        WorldMap[z, x] = resourceTypeIndex;
                     }
                 }
             }
