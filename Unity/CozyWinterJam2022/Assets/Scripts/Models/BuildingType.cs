@@ -11,6 +11,8 @@
         Workshop1 = 6,
         Workshop2 = 7,
         Workshop3 = 8,
-        Refinery = 9
+        Refinery = 9,
+        ArtisansHouse = 10,
+        ArtificersHouse = 10,
     }
 }

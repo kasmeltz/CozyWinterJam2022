@@ -22,37 +22,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public float StartingChristmasCheer;
         public float ChristmasCheerPerYearEnd;
 
-        public Image ChristmasCheerbar;
-
-        public ProduceableResourceCategory[] LumbercampResourceCostCategories;
-        public float[] LumbercampResourceCostAmounts;
-
-        public ProduceableResourceCategory[] ElfHouseResourceCostCategories;
-        public float[] ElfHouseResourceCostAmounts;
-
-        public ProduceableResourceCategory[] FarmResourceCostCategories;
-        public float[] FarmResourceCostAmounts;
-
-        public ProduceableResourceCategory[] HuntingLodgeResourceCostCategories;
-        public float[] HuntingLodgeResourceCostAmounts;
-
-        public ProduceableResourceCategory[] GingerbreadQuarryResourceCostCategories;
-        public float[] GingerbreadQuarryResourceCostAmounts;
-
-        public ProduceableResourceCategory[] CoalMineResourceCostCategories;
-        public float[] CoalMineResourceCostAmounts;
-
-        public ProduceableResourceCategory[] Workshop1ResourceCostCategories;
-        public float[] Workshop1ResourceCostAmounts;
-
-        public ProduceableResourceCategory[] Workshop2ResourceCostCategories;
-        public float[] Workshop2ResourceCostAmounts;
-
-        public ProduceableResourceCategory[] Workshop3ResourceCostCategories;
-        public float[] Workshop3ResourceCostAmounts;
-
-        public ProduceableResourceCategory[] RefineryResourceCostCategories;
-        public float[] RefineryResourceCostAmounts;
+        public Image ChristmasCheerbar;        
 
         public Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
 
@@ -279,8 +249,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     continue;
                 }
 
-                // TO DO - HOW DO DIFFERENT WORKERS AFFECT THE PRODUCTION?
-                var workers = building.WorkersPresent[0];
+                var workers = building.WorkersPresent;
 
                 bool allRequiredResourcesOnHand = true;
                 for(int i = 0;i < building.ResourcesConsumedCategories.Length;i++)
@@ -339,11 +308,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
                     // TO DO - HOW DO DIFFERENT RESOURCES AROUND THE BUILDING AFFECT THE PRODUCTION?
                     var amount = building.ResourcesProducedAmounts[i];
-                    amount *= resourcesFound;                    
+                    //amount *= resourcesFound;                    
 
-                    // TO DO - HOW DO MORE WORKERS EFFECT PRODUCTION?
-                    var workerBonus = amount * workers;
-                    amount += workerBonus;
+                    amount *= workers;
 
                     Inventory[categoryIndex] += amount * Time.deltaTime;
                 }
@@ -409,72 +376,31 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 [BuildingType.Workshop1] = true,
                 [BuildingType.Workshop2] = false,
                 [BuildingType.Workshop3] = false,
-                [BuildingType.Refinery] = false
+                [BuildingType.Refinery] = false,
+                [BuildingType.ArtisansHouse] = false,
+                [BuildingType.ArtificersHouse] = false
             };
 
             BuildingResourceCostCategories = new Dictionary<BuildingType, List<ProduceableResourceCategory>>();
             BuildingResourceCostAmounts = new Dictionary<BuildingType, List<float>>();
 
-            BuildingResourceCostCategories[BuildingType.Lumbercamp] = LumbercampResourceCostCategories
-                .ToList();
+            var buildingTypes = Enum
+                .GetValues(typeof(BuildingType));
 
-            BuildingResourceCostAmounts[BuildingType.Lumbercamp] = LumbercampResourceCostAmounts
-                .ToList();
+            foreach (BuildingType buildingType in buildingTypes)
+            {
+                var prefab = Resources
+                    .Load<BuildingBehaviour>($"Prefabs/Buildings/{buildingType}");
 
-            BuildingResourceCostCategories[BuildingType.ElfHouse] = ElfHouseResourceCostCategories
-                .ToList();
+                BuildingResourceCostCategories[buildingType] = prefab
+                    .ResourceCostCategories
+                    .ToList();
 
-            BuildingResourceCostAmounts[BuildingType.ElfHouse] = ElfHouseResourceCostAmounts
-                .ToList();
-
-            BuildingResourceCostCategories[BuildingType.Farm] = FarmResourceCostCategories
-                .ToList();
-
-            BuildingResourceCostAmounts[BuildingType.Farm] = FarmResourceCostAmounts
-                .ToList();
-           
-            BuildingResourceCostCategories[BuildingType.HuntingLodge] = HuntingLodgeResourceCostCategories
-                .ToList();
-
-            BuildingResourceCostAmounts[BuildingType.HuntingLodge] = HuntingLodgeResourceCostAmounts
-                .ToList();
-
-            BuildingResourceCostCategories[BuildingType.GingerbreadQuarry] = GingerbreadQuarryResourceCostCategories
-                .ToList();
-
-            BuildingResourceCostAmounts[BuildingType.GingerbreadQuarry] = GingerbreadQuarryResourceCostAmounts
-                .ToList();
-
-            BuildingResourceCostCategories[BuildingType.CoalMine] = CoalMineResourceCostCategories
-                .ToList();
-
-            BuildingResourceCostAmounts[BuildingType.CoalMine] = CoalMineResourceCostAmounts
-                .ToList();
-
-            BuildingResourceCostCategories[BuildingType.Workshop1] = Workshop1ResourceCostCategories
-                .ToList();
-
-            BuildingResourceCostAmounts[BuildingType.Workshop1] = Workshop1ResourceCostAmounts
-                .ToList();
-
-            BuildingResourceCostCategories[BuildingType.Workshop2] = Workshop2ResourceCostCategories
-                .ToList();
-
-            BuildingResourceCostAmounts[BuildingType.Workshop2] = Workshop2ResourceCostAmounts
-                .ToList();
-
-            BuildingResourceCostCategories[BuildingType.Workshop3] = Workshop3ResourceCostCategories
-                .ToList();
-
-            BuildingResourceCostAmounts[BuildingType.Workshop3] = Workshop3ResourceCostAmounts
-                .ToList();
-
-            BuildingResourceCostCategories[BuildingType.Refinery] = RefineryResourceCostCategories
-                .ToList();
-
-            BuildingResourceCostAmounts[BuildingType.Refinery] = RefineryResourceCostAmounts
-                .ToList();
-
+                BuildingResourceCostAmounts[buildingType] = prefab
+                    .ResourceCostAmounts
+                    .ToList();
+            }
+            
             Buildings = new Dictionary<Tuple<float, float>, BuildingBehaviour>();
 
             var resources = Enum
@@ -482,6 +408,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             Inventory = new float[resources.Length];
             Inventory[(int)ProduceableResourceCategory.Food] = 100;
+            Inventory[(int)ProduceableResourceCategory.Wood] = 100;
+            Inventory[(int)ProduceableResourceCategory.Cookies] = 100;
+            Inventory[(int)ProduceableResourceCategory.Gingerbread] = 100;
 
             var workers = Enum
                .GetValues(typeof(WorkerCategory));

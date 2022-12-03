@@ -8,7 +8,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
     {
         #region Members
 
-        public TMP_Text[] WorkerCountTexts;
+        public TMP_Text WorkerNameText;
+        public TMP_Text WorkerCountText;
 
         public GameworldBehaviour Gameworld { get; set; }
 
@@ -37,15 +38,27 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 return;
             }
             
+            if ((int)SelectedBuilding.WorkerCategory != workerType)
+            {
+                return;
+            }
+
+            if (SelectedBuilding.WorkersPresent >= SelectedBuilding.MaxWorkers)
+            {
+                return;
+            }
+
             var available = Gameworld.AvailableWorkers[workerType];
 
             if (available <= 0)
             {
                 return;
             }
+            
+            
 
             Gameworld.AvailableWorkers[workerType]--;
-            SelectedBuilding.WorkersPresent[workerType]++;
+            SelectedBuilding.WorkersPresent++;
         }
 
         public void RemoveWorker(int workerType)
@@ -55,14 +68,19 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 return;
             }
 
-            var available = SelectedBuilding.WorkersPresent[workerType];
+            if ((int)SelectedBuilding.WorkerCategory != workerType)
+            {
+                return;
+            }
+
+            var available = SelectedBuilding.WorkersPresent;
             if (available <= 0)
             {
                 return;
             }
 
             Gameworld.AvailableWorkers[workerType]++;
-            SelectedBuilding.WorkersPresent[workerType]--;
+            SelectedBuilding.WorkersPresent--;
         }
 
         protected void Awake()
@@ -77,19 +95,26 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 return;
             }
 
-            for (int i = 0; i < SelectedBuilding.WorkersPresent.Length; i++)
+            var workersPresent = SelectedBuilding.WorkersPresent;
+
+            string workerName = "";
+
+            switch(SelectedBuilding.WorkerCategory)
             {
-                if (i >= WorkerCountTexts.Length)
-                {
+                case Models.WorkerCategory.WorkerType1:
+                    workerName = "Worker";
                     break;
-                }
 
-                var workersPresent = SelectedBuilding.WorkersPresent[i];
+                case Models.WorkerCategory.WorkerType2:
+                    workerName = "Artisan";
+                    break;
 
-                var workerText = WorkerCountTexts[i];
-                workerText.text = workersPresent
-                    .ToString();
+                case Models.WorkerCategory.WorkerType3:
+                    workerName = "Artificer";
+                    break;
             }
+            WorkerNameText.text = workerName;
+            WorkerCountText.text = $"{workersPresent} / {SelectedBuilding.MaxWorkers}";
         }
 
         #endregion

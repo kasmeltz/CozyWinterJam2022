@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 208333837613240934}
   - component: {fileID: -7237671921177556450}
   m_Layer: 0
-  m_Name: ElfHouse
+  m_Name: ArtificersHouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

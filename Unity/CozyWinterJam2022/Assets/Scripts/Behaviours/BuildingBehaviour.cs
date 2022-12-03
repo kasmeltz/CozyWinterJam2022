@@ -17,6 +17,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public float BuildSeconds;
         public float BuildSpeed;
         public BuildingType BuildingType;
+        public int MaxWorkers;
+        public WorkerCategory WorkerCategory;
+
+        public ProduceableResourceCategory[] ResourceCostCategories;
+        public float[] ResourceCostAmounts;
 
         public ProduceableResourceCategory[] ResourcesProducedCategories;
         public float[] ResourcesProducedAmounts;
@@ -31,7 +36,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public bool IsBuilt { get; set; }
 
-        public int[] WorkersPresent { get; set; }
+        public int WorkersPresent { get; set; }
         
         #endregion
 
@@ -61,7 +66,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var workers = Enum
                .GetValues(typeof(WorkerCategory));
 
-            WorkersPresent = new int[workers.Length];
+            WorkersPresent = 0;
 
             BuildProgress = 0;
             IsBuilt = false;
