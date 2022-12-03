@@ -7,7 +7,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
     using UnityEngine.UI;
 
     [AddComponentMenu("CWJ2022/Gameworld")]
-
     public class GameworldBehaviour : MonoBehaviour
     {
         #region Members
@@ -38,7 +37,17 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public float Year { get; set; }
 
+        public List<List<Tuple<ProduceableResourceCategory, float>>> AllYearEndGoals { get; set; }
+
         public List<Tuple<ProduceableResourceCategory, float>> CurrentYearEndGoals { get; set; }
+
+        protected ToDoListBehaviour ToDoList { get; set; }
+
+        protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; }
+
+        protected Dictionary<BuildingType, List<ProduceableResourceCategory>> BuildingResourceCostCategories { get; set; }
+        
+        protected Dictionary<BuildingType, List<float>> BuildingResourceCostAmounts { get; set; }
 
         #endregion
 
@@ -56,6 +65,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 AvailableWorkers[categoryIndex] += amount;
             }
             
+            /*
             if (Buildings.Count > 1)
             {
                 var roads = FindObjectOfType<RoadsBehaviour>();
@@ -83,9 +93,10 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 roads
                     .AddRoads(firstVertex, secondVertex);
 
-                roads
-                    .AddRoads(firstVertex, new Vector3(0,-0.5f,0));
+                //roads
+                    //.AddRoads(firstVertex, new Vector3(0,-0.5f,0));
             }
+            */
         }
 
         #endregion
@@ -105,11 +116,30 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var key = new Tuple<float, float>(x, z);
             Buildings[key] = building;
             building.BuildComplete += Building_BuildComplete;
+
+            var categories = BuildingResourceCostCategories[building.BuildingType];
+            var amounts = BuildingResourceCostAmounts[building.BuildingType];
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                var category = categories[i];
+                var categoryIndex = (int)category;
+                var amount = amounts[i];
+                Inventory[categoryIndex] -= amount;
+            }
         }
 
         protected void CreateWorldMap()
         {
             WorldMap = new int[MapHeight, MapWidth];
+
+            List<ProduceableResourceCategory> potentialResources = new List<ProduceableResourceCategory>
+            {
+                ProduceableResourceCategory.Wood,
+                ProduceableResourceCategory.Gingerbread,
+                ProduceableResourceCategory.Coal,
+                ProduceableResourceCategory.Steel,
+            };
 
             for (int z = 0; z < MapHeight; z++)
             {
@@ -119,16 +149,21 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
                     if (UnityEngine.Random.Range(0, 100) > 70)
                     {
-                        var resourceIndex = UnityEngine.Random.Range(0, Inventory.Length);
+                        var resourceIndex = UnityEngine
+                            .Random
+                            .Range(0, potentialResources.Count);
+
+                        var resourceType = potentialResources[resourceIndex];
+                        var resourceTypeIndex = (int)resourceType;
 
                         var prefab = Resources
-                            .Load<ResourceBehaviour>("Prefabs/Wood");
+                            .Load<ResourceBehaviour>($"Prefabs/Resources/{resourceType}");
 
                         var resourceObject = Instantiate(prefab);
                         resourceObject.transform.position = new Vector3(x - 25, 0, z - 25);
                         resourceObject.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
 
-                        WorldMap[z, x] = resourceIndex;
+                        WorldMap[z, x] = resourceTypeIndex;
                     }
                 }
             }
@@ -171,6 +206,38 @@ namespace HNS.CozyWinterJam2022.Behaviours
             UpdateCheerBar();
         }
 
+        public int CountResourcesForBuilding(Vector3 position, int categoryIndex) 
+        {
+            int resourcesFound = 0;
+
+            var cellX = (int)Mathf
+                .Round(position.x + 25);
+
+            var cellY = (int)Mathf
+                .Round(position.z + 25);
+
+            for (int cy = cellY - 1; cy <= cellY + 1; cy++)
+            {
+                for (int cx = cellX - 1; cx <= cellX + 1; cx++)
+                {
+                    if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
+                    {
+                        continue;
+                    }
+
+                    var mapValue = WorldMap[cy, cx];
+                    if (mapValue != categoryIndex)
+                    {
+                        continue;
+                    }
+
+                    resourcesFound++;
+                }
+            }
+            
+            return resourcesFound;
+        }
+
         protected void ProduceResources()
         {
             foreach (var building in Buildings.Values)
@@ -180,45 +247,110 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     continue;
                 }
 
-                var cellX = (int)Mathf
-                    .Round(building.transform.position.x + 25);
-
-                var cellY = (int)Mathf
-                    .Round(building.transform.position.z + 25);
-
-                for (int cy = cellY - 1; cy <= cellY + 1; cy++)
+                bool allRequiredResourcesOnHand = true;
+                for(int i = 0;i < building.ResourcesConsumedCategories.Length;i++)
                 {
-                    for (int cx = cellX - 1; cx <= cellX + 1; cx++)
+                    var category = building.ResourcesConsumedCategories[i];
+                    var categoryIndex = (int)category;
+                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime;
+
+                    if (amount > Inventory[categoryIndex])
                     {
-                        if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
-                        {
-                            continue;
-                        }
-
-                        var mapValue = WorldMap[cy, cx];
-                        for (int i = 0; i < building.ResourcesProducedCategories.Length; i++)
-                        {
-                            var category = building.ResourcesProducedCategories[i];
-                            var categoryIndex = (int)category;
-                            if (mapValue != categoryIndex)
-                            {
-                                continue;
-                            }
-
-                            // TO DO - HOW DO DIFFERENT WORKERS AFFECT THE PRODUCTION?
-                            var workers = building.WorkersPresent[0];
-
-                            var amount = building.ResourcesProducedAmounts[i];
-
-                            // TO DO - HOW DO MORE WORKERS EFFECT PRODUCTION?
-                            var workerBonus = amount * workers;
-                            amount += workerBonus;
-
-                            Inventory[categoryIndex] += amount * Time.deltaTime;
-                        }
+                        allRequiredResourcesOnHand = false;
+                        break;
                     }
                 }
+
+                if (!allRequiredResourcesOnHand)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < building.ResourcesConsumedCategories.Length; i++)
+                {
+                    var category = building.ResourcesConsumedCategories[i];
+                    var categoryIndex = (int)category;
+                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime;
+                    Inventory[categoryIndex] -= amount;
+                }
+
+                for (int i = 0; i < building.ResourcesProducedCategories.Length; i++)
+                {
+                    var category = building.ResourcesProducedCategories[i];
+                    var categoryIndex = (int)category;
+                    int resourcesFound;
+
+                    if (category == ProduceableResourceCategory.Coal ||
+                        category == ProduceableResourceCategory.Gingerbread ||
+                        category == ProduceableResourceCategory.Steel ||
+                        category == ProduceableResourceCategory.Wood)
+                    {
+                        resourcesFound = CountResourcesForBuilding(building.transform.position, categoryIndex);
+                    }
+                    else if (category == ProduceableResourceCategory.Food && 
+                        building.BuildingType == BuildingType.Lumbercamp)
+                    {
+                        resourcesFound = CountResourcesForBuilding(building.transform.position, categoryIndex);
+                    }
+                    else if (category == ProduceableResourceCategory.Food && 
+                        building.BuildingType == BuildingType.Farm)
+                    {
+                        resourcesFound = CountResourcesForBuilding(building.transform.position, -1);
+                    }
+                    else
+                    {
+                        resourcesFound = 1;
+                    }
+
+                    // TO DO - HOW DO DIFFERENT RESOURCES AROUND THE BUILDING AFFECT THE PRODUCTION?
+                    var amount = building.ResourcesProducedAmounts[i];
+                    amount *= resourcesFound;
+
+                    // TO DO - HOW DO DIFFERENT WORKERS AFFECT THE PRODUCTION?
+                    var workers = building.WorkersPresent[0];
+
+                    // TO DO - HOW DO MORE WORKERS EFFECT PRODUCTION?
+                    var workerBonus = amount * workers;
+                    amount += workerBonus;
+
+                    Inventory[categoryIndex] += amount * Time.deltaTime;
+                }
             }
+        }
+
+        public bool IsBuildingAvailable(BuildingType buildingType)
+        {
+            if (BuildingTypesAvailable[buildingType] == false)
+            {
+                return false;
+            }
+
+            var categories = BuildingResourceCostCategories[buildingType];
+            var amounts = BuildingResourceCostAmounts[buildingType];
+
+            for (int i = 0; i < categories.Count;i++)
+            {
+                var category = categories[i];
+                var categoryIndex = (int)category;
+                var amount = amounts[i];
+                var onHand = Inventory[categoryIndex];
+
+                if (onHand < amount)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        protected void StartNewYear(int year)
+        {
+            CurrentYearEndGoals = AllYearEndGoals[0];
+            Year = year;
+
+            ToDoList
+                .SetGoals(CurrentYearEndGoals);
         }
 
         protected void Update()
@@ -234,6 +366,44 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void Awake()
         {
+            BuildingTypesAvailable = new Dictionary<BuildingType, bool>
+            {
+                [BuildingType.Lumbercamp] = true,
+                [BuildingType.ElfHouse] = true,
+                [BuildingType.Farm] = false,
+                [BuildingType.HuntingLodge] = false,
+                [BuildingType.GingerbreadQuarry] = false,
+                [BuildingType.CoalMine] = false,
+                [BuildingType.Workshop1] = false,
+                [BuildingType.Workshop2] = false,
+                [BuildingType.Workshop3] = false,
+                [BuildingType.Refinery] = false
+            };
+
+            BuildingResourceCostCategories = new Dictionary<BuildingType, List<ProduceableResourceCategory>>();
+            BuildingResourceCostAmounts = new Dictionary<BuildingType, List<float>>();
+
+            BuildingResourceCostCategories[BuildingType.Lumbercamp] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Lumbercamp] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.ElfHouse] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.ElfHouse] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Farm] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Farm] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.HuntingLodge] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.HuntingLodge] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.GingerbreadQuarry] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.GingerbreadQuarry] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.CoalMine] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.CoalMine] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Workshop1] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Workshop1] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Workshop2] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Workshop2] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Workshop3] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Workshop3] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Refinery] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Refinery] = new List<float> { };
+
             Buildings = new Dictionary<Tuple<float, float>, BuildingBehaviour>();
 
             var resources = Enum
@@ -246,10 +416,20 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             AvailableWorkers = new int[workers.Length];
 
-            YearTimeLeft = YearTimeToStart;
-            Year = 0;
+            YearTimeLeft = YearTimeToStart;            
 
-            CurrentYearEndGoals = new List<Tuple<ProduceableResourceCategory, float>>();
+            AllYearEndGoals = new List<List<Tuple<ProduceableResourceCategory, float>>>();
+
+            var firstYearGoals = new List<Tuple<ProduceableResourceCategory, float>>();
+            firstYearGoals
+                .Add(new Tuple<ProduceableResourceCategory, float>(ProduceableResourceCategory.Present1, 5));
+
+            AllYearEndGoals
+                .Add(firstYearGoals);
+
+            ToDoList = FindObjectOfType<ToDoListBehaviour>();
+
+            StartNewYear(0);
 
             ChristmasCheer = StartingChristmasCheer;
 
