@@ -29,7 +29,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void Awake()
         {
-            Gameworld = FindObjectOfType<GameworldBehaviour>();            
+            Gameworld = FindObjectOfType<GameworldBehaviour>(true);            
         }
        
         #endregion
