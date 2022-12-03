@@ -451,6 +451,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .GetValues(typeof(ProduceableResourceCategory));
 
             Inventory = new float[resources.Length];
+            Inventory[(int)ProduceableResourceCategory.Food] = 100;
 
             var workers = Enum
                .GetValues(typeof(WorkerCategory));
