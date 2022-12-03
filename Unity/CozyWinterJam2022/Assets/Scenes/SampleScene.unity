@@ -10890,6 +10890,36 @@ MonoBehaviour:
   StartingChristmasCheer: 500
   ChristmasCheerPerYearEnd: 100
   ChristmasCheerbar: {fileID: 854329761}
+  LumbercampResourceCostCategories: 00000000
+  LumbercampResourceCostAmounts:
+  - 0
+  ElfHouseResourceCostCategories: 00000000
+  ElfHouseResourceCostAmounts:
+  - 0
+  FarmResourceCostCategories: 00000000
+  FarmResourceCostAmounts:
+  - 0
+  HuntingLodgeResourceCostCategories: 00000000
+  HuntingLodgeResourceCostAmounts:
+  - 0
+  GingerbreadQuarryResourceCostCategories: 00000000
+  GingerbreadQuarryResourceCostAmounts:
+  - 0
+  CoalMineResourceCostCategories: 00000000
+  CoalMineResourceCostAmounts:
+  - 0
+  Workshop1ResourceCostCategories: 00000000
+  Workshop1ResourceCostAmounts:
+  - 0
+  Workshop2ResourceCostCategories: 00000000
+  Workshop2ResourceCostAmounts:
+  - 0
+  Workshop3ResourceCostCategories: 00000000
+  Workshop3ResourceCostAmounts:
+  - 0
+  RefineryResourceCostCategories: 00000000
+  RefineryResourceCostAmounts:
+  - 0
 --- !u!4 &1630717337
 Transform:
   m_ObjectHideFlags: 0
