@@ -36,7 +36,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             }
            
             var prefab = Resources
-                .Load<BuildingBehaviour>($"Prefabs/{TypeToBuild}");
+                .Load<BuildingBehaviour>($"Prefabs/Buildings/{TypeToBuild}");
 
             var building = Instantiate(prefab);
 

@@ -266,9 +266,9 @@ GameObject:
   - component: {fileID: 4379623938577948944}
   - component: {fileID: 8509601678061549381}
   - component: {fileID: -704332461643433108}
-  - component: {fileID: 3722686177791653069}
+  - component: {fileID: -565370634557479258}
   m_Layer: 0
-  m_Name: SantasWorkshop
+  m_Name: GingerbreadQuarry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357,13 +357,15 @@ MonoBehaviour:
   ProgressBarOffset: {x: -50, y: -40}
   BuildSeconds: 10
   BuildSpeed: 1
-  BuildingType: 0
-  ResourcesProducedCategories: 00000000
+  BuildingType: 4
+  ResourcesProducedCategories: 02000000
   ResourcesProducedAmounts:
   - 1
+  ResourcesConsumedCategories: 
+  ResourcesConsumedAmounts: []
   WorkersProducedCategories: 
   WorkersProducedAmounts: 
---- !u!65 &3722686177791653069
+--- !u!65 &-565370634557479258
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

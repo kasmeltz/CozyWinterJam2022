@@ -124,9 +124,10 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     if (UnityEngine.Random.Range(0, 100) > 70)
                     {
                         var resourceIndex = UnityEngine.Random.Range(0, Inventory.Length);
+                        var resourceType = (ProduceableResourceCategory)resourceIndex;
 
                         var prefab = Resources
-                            .Load<ResourceBehaviour>("Prefabs/Wood");
+                            .Load<ResourceBehaviour>($"Prefabs/Resources/{resourceType}");
 
                         var resourceObject = Instantiate(prefab);
                         resourceObject.transform.position = new Vector3(x - 25, 0, z - 25);

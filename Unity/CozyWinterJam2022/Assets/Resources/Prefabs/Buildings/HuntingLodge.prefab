@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: -704332461643433108}
   - component: {fileID: -565370634557479258}
   m_Layer: 0
-  m_Name: House
+  m_Name: HuntingLodge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357,14 +357,14 @@ MonoBehaviour:
   ProgressBarOffset: {x: -50, y: -40}
   BuildSeconds: 10
   BuildSpeed: 1
-  BuildingType: 1
-  ResourcesProducedCategories: 00000000
+  BuildingType: 2
+  ResourcesProducedCategories: 01000000
   ResourcesProducedAmounts:
   - 1
   ResourcesConsumedCategories: 
   ResourcesConsumedAmounts: []
-  WorkersProducedCategories: 00000000
-  WorkersProducedAmounts: 03000000
+  WorkersProducedCategories: 
+  WorkersProducedAmounts: 
 --- !u!65 &-565370634557479258
 BoxCollider:
   m_ObjectHideFlags: 0
