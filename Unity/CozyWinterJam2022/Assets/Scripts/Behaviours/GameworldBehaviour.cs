@@ -226,43 +226,59 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     Inventory[categoryIndex] -= amount;
                 }
 
-                var cellX = (int)Mathf
-                    .Round(building.transform.position.x + 25);
-
-                var cellY = (int)Mathf
-                    .Round(building.transform.position.z + 25);
-
-                for (int cy = cellY - 1; cy <= cellY + 1; cy++)
+                for (int i = 0; i < building.ResourcesProducedCategories.Length; i++)
                 {
-                    for (int cx = cellX - 1; cx <= cellX + 1; cx++)
-                    {
-                        if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
-                        {
-                            continue;
-                        }
+                    var category = building.ResourcesProducedCategories[i];
+                    var categoryIndex = (int)category;
+                    int resourcesFound = 0;
 
-                        var mapValue = WorldMap[cy, cx];
-                        for (int i = 0; i < building.ResourcesProducedCategories.Length; i++)
+                    if (category == ProduceableResourceCategory.Coal ||
+                        category == ProduceableResourceCategory.Gingerbread || 
+                        category == ProduceableResourceCategory.Steel ||
+                        category == ProduceableResourceCategory.Wood)
+                    {                        
+                        var cellX = (int)Mathf
+                            .Round(building.transform.position.x + 25);
+
+                        var cellY = (int)Mathf
+                            .Round(building.transform.position.z + 25);
+
+                        for (int cy = cellY - 1; cy <= cellY + 1; cy++)
                         {
-                            var category = building.ResourcesProducedCategories[i];
-                            var categoryIndex = (int)category;
-                            if (mapValue != categoryIndex)
+                            for (int cx = cellX - 1; cx <= cellX + 1; cx++)
                             {
-                                continue;
+                                if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
+                                {
+                                    continue;
+                                }
+
+                                var mapValue = WorldMap[cy, cx];
+                                if (mapValue != categoryIndex)
+                                {
+                                    continue;
+                                }
+
+                                resourcesFound++;
                             }
-
-                            // TO DO - HOW DO DIFFERENT WORKERS AFFECT THE PRODUCTION?
-                            var workers = building.WorkersPresent[0];
-
-                            var amount = building.ResourcesProducedAmounts[i];
-
-                            // TO DO - HOW DO MORE WORKERS EFFECT PRODUCTION?
-                            var workerBonus = amount * workers;
-                            amount += workerBonus;
-
-                            Inventory[categoryIndex] += amount * Time.deltaTime;
                         }
                     }
+                    else
+                    {
+                        resourcesFound = 1;
+                    }
+
+                    // TO DO - HOW DO DIFFERENT RESOURCES AROUND THE BUILDING AFFECT THE PRODUCTION?
+                    var amount = building.ResourcesProducedAmounts[i];
+                    amount *= resourcesFound;
+
+                    // TO DO - HOW DO DIFFERENT WORKERS AFFECT THE PRODUCTION?
+                    var workers = building.WorkersPresent[0];
+
+                    // TO DO - HOW DO MORE WORKERS EFFECT PRODUCTION?
+                    var workerBonus = amount * workers;
+                    amount += workerBonus;
+
+                    Inventory[categoryIndex] += amount * Time.deltaTime;
                 }
             }
         }
