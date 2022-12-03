@@ -1,7 +1,7 @@
 namespace HNS.CozyWinterJam2022.Behaviours
 {
-    using HNS.CozyWinterJam2022.Models;
     using UnityEngine;
+    using UnityEngine.UI;
 
     [AddComponentMenu("CWJ2022/BuildBuildingPanel")]
 
@@ -10,6 +10,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
         #region Members
 
         protected BuildingPlacerBehaviour BuildingPlacer { get; set; }       
+
+        protected GameworldBehaviour Gameworld { get; set; }
 
         #endregion
 
@@ -27,6 +29,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
         protected void Awake()
         {
             BuildingPlacer = FindObjectOfType<BuildingPlacerBehaviour>(true);
+            Gameworld = FindObjectOfType<GameworldBehaviour>(true);
 
             transform.localScale = new Vector3(0, 0, 0);
         }
@@ -38,6 +41,18 @@ namespace HNS.CozyWinterJam2022.Behaviours
             {
                 if (transform.localScale.x == 0)
                 {
+                    var buildBuildings = GetComponentsInChildren<BuildBuildingBehaviour>();
+                    foreach (var buildBuilding in buildBuildings)
+                    {
+                        var isAvailable = Gameworld
+                            .IsBuildingAvailable(buildBuilding.BuildingType);
+
+                        var button = buildBuilding
+                            .GetComponent<Button>();
+
+                        button.interactable = isAvailable;
+                    }
+
                     var rectTransform = GetComponent<RectTransform>();
                     rectTransform.anchoredPosition = new Vector2(
                         Input.mousePosition.x - rectTransform.sizeDelta.x / 2,

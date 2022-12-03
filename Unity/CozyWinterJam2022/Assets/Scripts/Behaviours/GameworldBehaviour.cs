@@ -43,6 +43,12 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected ToDoListBehaviour ToDoList { get; set; }
 
+        protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; }
+
+        protected Dictionary<BuildingType, List<ProduceableResourceCategory>> BuildingResourceCostCategories { get; set; }
+        
+        protected Dictionary<BuildingType, List<float>> BuildingResourceCostAmounts { get; set; }
+
         #endregion
 
         #region Event Handlers
@@ -110,6 +116,17 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var key = new Tuple<float, float>(x, z);
             Buildings[key] = building;
             building.BuildComplete += Building_BuildComplete;
+
+            var categories = BuildingResourceCostCategories[building.BuildingType];
+            var amounts = BuildingResourceCostAmounts[building.BuildingType];
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                var category = categories[i];
+                var categoryIndex = (int)category;
+                var amount = amounts[i];
+                Inventory[categoryIndex] -= amount;
+            }
         }
 
         protected void CreateWorldMap()
@@ -282,6 +299,32 @@ namespace HNS.CozyWinterJam2022.Behaviours
             }
         }
 
+        public bool IsBuildingAvailable(BuildingType buildingType)
+        {
+            if (BuildingTypesAvailable[buildingType] == false)
+            {
+                return false;
+            }
+
+            var categories = BuildingResourceCostCategories[buildingType];
+            var amounts = BuildingResourceCostAmounts[buildingType];
+
+            for (int i = 0; i < categories.Count;i++)
+            {
+                var category = categories[i];
+                var categoryIndex = (int)category;
+                var amount = amounts[i];
+                var onHand = Inventory[categoryIndex];
+
+                if (onHand < amount)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         protected void StartNewYear(int year)
         {
             CurrentYearEndGoals = AllYearEndGoals[0];
@@ -304,6 +347,44 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void Awake()
         {
+            BuildingTypesAvailable = new Dictionary<BuildingType, bool>
+            {
+                [BuildingType.Lumbercamp] = true,
+                [BuildingType.ElfHouse] = true,
+                [BuildingType.Farm] = false,
+                [BuildingType.HuntingLodge] = false,
+                [BuildingType.GingerbreadQuarry] = false,
+                [BuildingType.CoalMine] = false,
+                [BuildingType.Workshop1] = false,
+                [BuildingType.Workshop2] = false,
+                [BuildingType.Workshop3] = false,
+                [BuildingType.Refinery] = false
+            };
+
+            BuildingResourceCostCategories = new Dictionary<BuildingType, List<ProduceableResourceCategory>>();
+            BuildingResourceCostAmounts = new Dictionary<BuildingType, List<float>>();
+
+            BuildingResourceCostCategories[BuildingType.Lumbercamp] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Lumbercamp] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.ElfHouse] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.ElfHouse] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Farm] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Farm] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.HuntingLodge] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.HuntingLodge] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.GingerbreadQuarry] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.GingerbreadQuarry] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.CoalMine] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.CoalMine] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Workshop1] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Workshop1] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Workshop2] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Workshop2] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Workshop3] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Workshop3] = new List<float> { };
+            BuildingResourceCostCategories[BuildingType.Refinery] = new List<ProduceableResourceCategory> { };
+            BuildingResourceCostAmounts[BuildingType.Refinery] = new List<float> { };
+
             Buildings = new Dictionary<Tuple<float, float>, BuildingBehaviour>();
 
             var resources = Enum
