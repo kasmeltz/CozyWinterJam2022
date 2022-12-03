@@ -7,7 +7,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
     using UnityEngine.UI;
 
     [AddComponentMenu("CWJ2022/Gameworld")]
-
     public class GameworldBehaviour : MonoBehaviour
     {
         #region Members
