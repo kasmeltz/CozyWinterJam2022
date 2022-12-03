@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuBehaviour : MonoBehaviour
 {
+    public AudioSource MusicSource;
+
     public GameObject MenuButtons;
     public GameObject CreditsMenu;
 
@@ -39,5 +41,17 @@ public class MainMenuBehaviour : MonoBehaviour
     {
         TargetButtonsWidth = 1f;
         TargetCreditsHeight = -700;
+    }
+
+    public void ToggleMusic(bool toggle)
+    {
+        if (toggle)
+        {
+            MusicSource.volume = 1f;
+        }
+        else
+        {
+            MusicSource.volume = 0.0f;
+        }
     }
 }
