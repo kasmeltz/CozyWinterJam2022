@@ -508,7 +508,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 [BuildingType.Workshop2] = false,
                 [BuildingType.Workshop3] = false,
                 [BuildingType.Refinery] = false,
-                [BuildingType.ArtisansHouse] = false,
+                [BuildingType.ArtisansHouse] = true,
                 [BuildingType.ArtificersHouse] = false
             };
 
