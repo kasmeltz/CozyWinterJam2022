@@ -34,21 +34,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
             {
                 return;
             }
-
-            string prefabeName = "";
-            switch(TypeToBuild)
-            {
-                case BuildingType.SantasWorkshop:
-                    prefabeName = "SantasWorkshop";
-                    break;
-
-                case BuildingType.House:
-                    prefabeName = "House";
-                    break;
-            }
-
+           
             var prefab = Resources
-                .Load<BuildingBehaviour>($"Prefabs/{prefabeName}");
+                .Load<BuildingBehaviour>($"Prefabs/{TypeToBuild}");
 
             var building = Instantiate(prefab);
 

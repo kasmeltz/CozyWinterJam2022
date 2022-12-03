@@ -292,7 +292,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             var firstYearGoals = new List<Tuple<ProduceableResourceCategory, float>>();
             firstYearGoals
-                .Add(new Tuple<ProduceableResourceCategory, float>(ProduceableResourceCategory.SimplePresent, 5));
+                .Add(new Tuple<ProduceableResourceCategory, float>(ProduceableResourceCategory.Present1, 5));
 
             AllYearEndGoals
                 .Add(firstYearGoals);
