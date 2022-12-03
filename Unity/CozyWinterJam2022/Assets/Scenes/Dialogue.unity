@@ -796,7 +796,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1025583551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df9bd7178b04f8a4eb3683c2cb5e7892, type: 3}
+  m_Script: {fileID: 11500000, guid: e40c00e81905bde44979b52dec73153f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SpeakerLeftImage: {fileID: 295521915}
@@ -807,7 +807,7 @@ MonoBehaviour:
   - sample text sample text
   - sample text sample text sample text
   - sample text sample text sample text sample text
-  IsSelf: 01000100
+  IsSelf: 00010001
 --- !u!1 &1252828181
 GameObject:
   m_ObjectHideFlags: 0
