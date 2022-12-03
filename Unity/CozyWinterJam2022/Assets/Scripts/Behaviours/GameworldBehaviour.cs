@@ -72,7 +72,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             if (building.BuildingType == BuildingType.Farm)
             {
                 var cellX = (int)Mathf
-                   .Round(building.transform.position.x + 25);
+                    .Round(building.transform.position.x + 25);
 
                 var cellY = (int)Mathf
                     .Round(building.transform.position.z + 25);
@@ -289,6 +289,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
                         continue;
                     }
 
+                    if (cx == cellX || cy == cellY)
+                    {
+                        continue;
+                    }
+
                     var key = new Tuple<float, float>(cx, cy);
                     if (!ResourceObjects
                         .ContainsKey(key))
@@ -330,6 +335,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 for (int cx = cellX - 1; cx <= cellX + 1; cx++)
                 {
                     if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
+                    {
+                        continue;
+                    }
+
+                    if (cx == cellX || cy == cellY)
                     {
                         continue;
                     }
