@@ -36,12 +36,19 @@ namespace HNS.CozyWinterJam2022.Behaviours
             if (Input
                 .GetMouseButtonDown(1))
             {
-                var rectTransform = GetComponent<RectTransform>();
-                rectTransform.anchoredPosition = new Vector2(
-                    Input.mousePosition.x - rectTransform.sizeDelta.x / 2,
-                    Input.mousePosition.y - rectTransform.sizeDelta.y / 2);
+                if (transform.localScale.x == 0)
+                {
+                    var rectTransform = GetComponent<RectTransform>();
+                    rectTransform.anchoredPosition = new Vector2(
+                        Input.mousePosition.x - rectTransform.sizeDelta.x / 2,
+                        Input.mousePosition.y - rectTransform.sizeDelta.y / 2);
 
-                transform.localScale = new Vector3(1, 1, 1);
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(0, 0, 0);
+                }
             }
         }
         
