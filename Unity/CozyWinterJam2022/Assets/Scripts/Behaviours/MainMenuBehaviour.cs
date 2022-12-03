@@ -9,7 +9,7 @@ public class MainMenuBehaviour : MonoBehaviour
     public GameObject CreditsMenu;
 
     float TargetButtonsWidth = 1f;
-    float TargetCreditsHeight = -444;
+    float TargetCreditsHeight = -700;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +38,6 @@ public class MainMenuBehaviour : MonoBehaviour
     public void CloseCreditsButtons()
     {
         TargetButtonsWidth = 1f;
-        TargetCreditsHeight = -444;
+        TargetCreditsHeight = -700;
     }
 }
