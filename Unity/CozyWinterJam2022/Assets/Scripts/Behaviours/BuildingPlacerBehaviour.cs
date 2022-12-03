@@ -3,13 +3,19 @@ namespace HNS.CozyWinterJam2022.Behaviours
     using HNS.CozyWinterJam2022.Models;
     using System;
     using System.Collections.Generic;
+    using TMPro;
     using UnityEngine;
+    using UnityEngine.UI;
 
     [AddComponentMenu("CWJ2022/BuildingPlacer")]
 
     public class BuildingPlacerBehaviour : MonoBehaviour
     {
         #region Members
+
+        public Image UIPanel;
+        public TMP_Text AmountText;
+        public Vector2 UIPanelOffset;
 
         public BuildingType TypeToBuild { get; set; }
 
@@ -34,21 +40,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
             {
                 return;
             }
-
-            string prefabeName = "";
-            switch(TypeToBuild)
-            {
-                case BuildingType.SantasWorkshop:
-                    prefabeName = "SantasWorkshop";
-                    break;
-
-                case BuildingType.House:
-                    prefabeName = "House";
-                    break;
-            }
-
+           
             var prefab = Resources
-                .Load<BuildingBehaviour>($"Prefabs/{prefabeName}");
+                .Load<BuildingBehaviour>($"Prefabs/Buildings/{TypeToBuild}");
 
             var building = Instantiate(prefab);
 
@@ -62,6 +56,60 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             Gameworld
                 .AddBuilding(x, z, building);
+        }
+
+        protected void UpdateUI()
+        {          
+            if (TypeToBuild == BuildingType.Lumbercamp ||
+                TypeToBuild == BuildingType.Farm ||
+                TypeToBuild == BuildingType.HuntingLodge ||
+                TypeToBuild == BuildingType.GingerbreadQuarry ||
+                TypeToBuild == BuildingType.CoalMine)
+            {
+                var screenPoint = Camera.main.WorldToScreenPoint(transform.position);
+                UIPanel.rectTransform.anchoredPosition = new Vector2(screenPoint.x, screenPoint.y) + UIPanelOffset;
+
+                int categoryIndex = 0;
+                switch (TypeToBuild)
+                {
+                    case BuildingType.Lumbercamp:
+                        categoryIndex = (int)ProduceableResourceCategory.Wood;
+                        break;
+
+                    case BuildingType.Farm:
+                        categoryIndex = -1;
+                        break;
+
+                    case BuildingType.HuntingLodge:
+                        categoryIndex = (int)ProduceableResourceCategory.Wood;
+                        break;
+
+                    case BuildingType.GingerbreadQuarry:
+                        categoryIndex = (int)ProduceableResourceCategory.Gingerbread;
+                        break;
+
+                    case BuildingType.CoalMine:
+                        categoryIndex = (int)ProduceableResourceCategory.Coal;
+                        break;
+                }
+
+                var resourcesFound = Gameworld
+                    .CountResourcesForBuilding(transform.position, categoryIndex);
+
+                AmountText.text = resourcesFound
+                    .ToString();
+
+                UIPanel
+                    .gameObject
+                    .SetActive(true);
+
+            }
+            else
+            {
+                UIPanel
+                    .gameObject
+                    .SetActive(false);
+            }
         }
 
         protected void Update()
@@ -105,7 +153,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
             }
 
             transform.position = new Vector3(x, 0, z);
-
+            
+            UpdateUI();
+            
             if (Input
                 .GetMouseButtonDown(0))
             {

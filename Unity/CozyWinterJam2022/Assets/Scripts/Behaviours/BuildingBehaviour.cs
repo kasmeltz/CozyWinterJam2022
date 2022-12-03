@@ -21,6 +21,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public ProduceableResourceCategory[] ResourcesProducedCategories;
         public float[] ResourcesProducedAmounts;
 
+        public ProduceableResourceCategory[] ResourcesConsumedCategories;
+        public float[] ResourcesConsumedAmounts;
+
         public WorkerCategory[] WorkersProducedCategories;
         public int[] WorkersProducedAmounts;
 
@@ -44,6 +47,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
         #endregion
 
         #region Methods
+
+        protected void OnMouseDown()
+        {
+            var buildingWorkerPabel = FindObjectOfType<BuildingWorkerPanelBehaviour>(true);
+
+            buildingWorkerPabel
+                .SetActiveBuilding(this);
+        }
 
         protected void Awake()
         {
