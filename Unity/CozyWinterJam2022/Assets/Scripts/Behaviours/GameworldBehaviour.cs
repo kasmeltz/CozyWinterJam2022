@@ -206,6 +206,38 @@ namespace HNS.CozyWinterJam2022.Behaviours
             UpdateCheerBar();
         }
 
+        public int CountResourcesForBuilding(Vector3 position, int categoryIndex) 
+        {
+            int resourcesFound = 0;
+
+            var cellX = (int)Mathf
+                .Round(position.x + 25);
+
+            var cellY = (int)Mathf
+                .Round(position.z + 25);
+
+            for (int cy = cellY - 1; cy <= cellY + 1; cy++)
+            {
+                for (int cx = cellX - 1; cx <= cellX + 1; cx++)
+                {
+                    if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
+                    {
+                        continue;
+                    }
+
+                    var mapValue = WorldMap[cy, cx];
+                    if (mapValue != categoryIndex)
+                    {
+                        continue;
+                    }
+
+                    resourcesFound++;
+                }
+            }
+            
+            return resourcesFound;
+        }
+
         protected void ProduceResources()
         {
             foreach (var building in Buildings.Values)
@@ -246,37 +278,24 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 {
                     var category = building.ResourcesProducedCategories[i];
                     var categoryIndex = (int)category;
-                    int resourcesFound = 0;
+                    int resourcesFound;
 
                     if (category == ProduceableResourceCategory.Coal ||
-                        category == ProduceableResourceCategory.Gingerbread || 
+                        category == ProduceableResourceCategory.Gingerbread ||
                         category == ProduceableResourceCategory.Steel ||
                         category == ProduceableResourceCategory.Wood)
-                    {                        
-                        var cellX = (int)Mathf
-                            .Round(building.transform.position.x + 25);
-
-                        var cellY = (int)Mathf
-                            .Round(building.transform.position.z + 25);
-
-                        for (int cy = cellY - 1; cy <= cellY + 1; cy++)
-                        {
-                            for (int cx = cellX - 1; cx <= cellX + 1; cx++)
-                            {
-                                if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
-                                {
-                                    continue;
-                                }
-
-                                var mapValue = WorldMap[cy, cx];
-                                if (mapValue != categoryIndex)
-                                {
-                                    continue;
-                                }
-
-                                resourcesFound++;
-                            }
-                        }
+                    {
+                        resourcesFound = CountResourcesForBuilding(building.transform.position, categoryIndex);
+                    }
+                    else if (category == ProduceableResourceCategory.Food && 
+                        building.BuildingType == BuildingType.Lumbercamp)
+                    {
+                        resourcesFound = CountResourcesForBuilding(building.transform.position, categoryIndex);
+                    }
+                    else if (category == ProduceableResourceCategory.Food && 
+                        building.BuildingType == BuildingType.Farm)
+                    {
+                        resourcesFound = CountResourcesForBuilding(building.transform.position, -1);
                     }
                     else
                     {
