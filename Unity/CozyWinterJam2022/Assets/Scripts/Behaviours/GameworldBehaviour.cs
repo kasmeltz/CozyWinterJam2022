@@ -22,14 +22,16 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public float StartingChristmasCheer;
         public float ChristmasCheerPerYearEnd;
 
-        public Image ChristmasCheerbar;        
+        public Image ChristmasCheerbar;
 
         public Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
+
+        public Dictionary<Tuple<float, float>, ResourceBehaviour> ResourceObjects { get; set; }
 
         public float[] Inventory { get; set; }
 
         public int[] AvailableWorkers { get; set; }
-      
+
         public int[,] WorldMap { get; set; }
 
         public float ChristmasCheer { get; set; }
@@ -46,9 +48,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; }
 
-        
+
         protected Dictionary<BuildingType, List<ProduceableResourceCategory>> BuildingResourceCostCategories { get; set; }
-        
+
         protected Dictionary<BuildingType, List<float>> BuildingResourceCostAmounts { get; set; }
 
         #endregion
@@ -66,7 +68,34 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 var amount = building.WorkersProducedAmounts[i];
                 AvailableWorkers[categoryIndex] += amount;
             }
-            
+
+            if (building.BuildingType == BuildingType.Farm)
+            {
+                var cellX = (int)Mathf
+                   .Round(building.transform.position.x + 25);
+
+                var cellY = (int)Mathf
+                    .Round(building.transform.position.z + 25);
+
+                for (int cy = cellY - 1; cy <= cellY + 1; cy++)
+                {
+                    for (int cx = cellX - 1; cx <= cellX + 1; cx++)
+                    {
+                        if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
+                        {
+                            continue;
+                        }
+
+                        if (cx == cellX && cy == cellY)
+                        {
+                            continue;
+                        }
+
+                        CreateResource(cx, cy, ProduceableResourceCategory.Food);
+                    }
+                }
+            }
+
             /*
             if (Buildings.Count > 1)
             {
@@ -99,13 +128,13 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     //.AddRoads(firstVertex, new Vector3(0,-0.5f,0));
             }
             */
-    }
+        }
 
-    #endregion
+        #endregion
 
-    #region Methods
+        #region Methods
 
-    public bool BuildingExists(float x, float z)
+        public bool BuildingExists(float x, float z)
         {
             var key = new Tuple<float, float>(x, z);
 
@@ -129,6 +158,51 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 var amount = amounts[i];
                 Inventory[categoryIndex] -= amount;
             }
+        }
+
+        public void DestroyResource(ResourceBehaviour resourceBehaviour)
+        {
+            var key = new Tuple<float, float>(resourceBehaviour.transform.position.x + 25, resourceBehaviour.transform.position.z + 25);
+
+            if (!ResourceObjects.ContainsKey(key))
+            {
+                return;
+            }
+
+            if (!ResourceObjects[key] == resourceBehaviour)
+            {
+                return;
+            }
+
+            ResourceObjects
+                .Remove(key);
+
+            Destroy(resourceBehaviour.gameObject);
+        }
+
+        public void CreateResource(int x, int z, ProduceableResourceCategory resourceCategory)
+        {
+            var key = new Tuple<float, float>(x, z);
+
+            if (ResourceObjects
+                .ContainsKey(key))
+            {
+                return;
+            }
+
+            int resourceCategoryIndex = (int)resourceCategory;
+
+            var prefab = Resources
+                .Load<ResourceBehaviour>($"Prefabs/Resources/{resourceCategory}");
+
+            var resourceObject = Instantiate(prefab);
+            resourceObject.transform.position = new Vector3(x - 25, 0, z - 25);
+            resourceObject.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+            resourceObject.AmounLeft = resourceObject.StartingAmount;
+
+            ResourceObjects[key] = resourceObject;
+
+            WorldMap[z, x] = resourceCategoryIndex;
         }
 
         protected void CreateWorldMap()
@@ -155,17 +229,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                             .Random
                             .Range(0, potentialResources.Count);
 
-                        var resourceType = potentialResources[resourceIndex];
-                        var resourceTypeIndex = (int)resourceType;
-
-                        var prefab = Resources
-                            .Load<ResourceBehaviour>($"Prefabs/Resources/{resourceType}");
-
-                        var resourceObject = Instantiate(prefab);
-                        resourceObject.transform.position = new Vector3(x - 25, 0, z - 25);
-                        resourceObject.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-
-                        WorldMap[z, x] = resourceTypeIndex;
+                        CreateResource(x, z, potentialResources[resourceIndex]);
                     }
                 }
             }
@@ -181,7 +245,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
         protected void DoEndOfYear()
         {
             bool passedYear = true;
-            foreach(var tuple in CurrentYearEndGoals)
+            foreach (var tuple in CurrentYearEndGoals)
             {
                 var resourceCategory = tuple.Item1;
                 var resourceCategoryIndex = (int)resourceCategory;
@@ -208,7 +272,50 @@ namespace HNS.CozyWinterJam2022.Behaviours
             UpdateCheerBar();
         }
 
-        public int CountResourcesForBuilding(Vector3 position, int categoryIndex) 
+        public ResourceBehaviour GetResourceSurroundingPosition(Vector3 position, ProduceableResourceCategory category)
+        {
+            var cellX = (int)Mathf
+                .Round(position.x + 25);
+
+            var cellY = (int)Mathf
+                .Round(position.z + 25);
+
+            for (int cy = cellY - 1; cy <= cellY + 1; cy++)
+            {
+                for (int cx = cellX - 1; cx <= cellX + 1; cx++)
+                {
+                    if (cx < 0 || cx >= 50 || cy < 0 || cy >= 50)
+                    {
+                        continue;
+                    }
+
+                    var key = new Tuple<float, float>(cx, cy);
+                    if (!ResourceObjects
+                        .ContainsKey(key))
+                    {
+                        continue;
+                    }
+
+                    var resourceObject = ResourceObjects[key];
+
+                    if (resourceObject.ResourceCategory != category)
+                    {
+                        continue;
+                    }
+
+                    if (resourceObject.AmounLeft <= 0)
+                    {
+                        continue;
+                    }
+
+                    return resourceObject;
+                }
+            }
+
+            return null;
+        }
+
+        public int CountResourcesForBuilding(Vector3 position, int categoryIndex)
         {
             int resourcesFound = 0;
 
@@ -236,7 +343,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     resourcesFound++;
                 }
             }
-            
+
             return resourcesFound;
         }
 
@@ -252,11 +359,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 var workers = building.WorkersPresent;
 
                 bool allRequiredResourcesOnHand = true;
-                for(int i = 0;i < building.ResourcesConsumedCategories.Length;i++)
+                for (int i = 0; i < building.ResourcesConsumedCategories.Length; i++)
                 {
                     var category = building.ResourcesConsumedCategories[i];
                     var categoryIndex = (int)category;
-                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime * workers;
+                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime;
 
                     if (amount > Inventory[categoryIndex])
                     {
@@ -274,7 +381,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 {
                     var category = building.ResourcesConsumedCategories[i];
                     var categoryIndex = (int)category;
-                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime * workers;
+                    var amount = building.ResourcesConsumedAmounts[i] * Time.deltaTime;
+
                     Inventory[categoryIndex] -= amount;
                 }
 
@@ -282,33 +390,46 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 {
                     var category = building.ResourcesProducedCategories[i];
                     var categoryIndex = (int)category;
-                    int resourcesFound;
 
+                    bool requiresResource = false;
+                    ResourceBehaviour resourceFound = null;
                     if (category == ProduceableResourceCategory.Coal ||
                         category == ProduceableResourceCategory.Gingerbread ||
                         category == ProduceableResourceCategory.Steel ||
                         category == ProduceableResourceCategory.Wood)
                     {
-                        resourcesFound = CountResourcesForBuilding(building.transform.position, categoryIndex);
+                        resourceFound = GetResourceSurroundingPosition(building.transform.position, category);
+                        requiresResource = true;
                     }
-                    else if (category == ProduceableResourceCategory.Food && 
+                    else if (category == ProduceableResourceCategory.Food &&
                         building.BuildingType == BuildingType.Lumbercamp)
                     {
-                        resourcesFound = CountResourcesForBuilding(building.transform.position, categoryIndex);
+                        resourceFound = GetResourceSurroundingPosition(building.transform.position, category);
+                        requiresResource = true;
                     }
-                    else if (category == ProduceableResourceCategory.Food && 
+                    else if (category == ProduceableResourceCategory.Food &&
                         building.BuildingType == BuildingType.Farm)
                     {
-                        resourcesFound = CountResourcesForBuilding(building.transform.position, -1);
-                    }
-                    else
-                    {
-                        resourcesFound = 1;
+                        resourceFound = GetResourceSurroundingPosition(building.transform.position, category);
+                        requiresResource = true;
                     }
 
-                    // TO DO - HOW DO DIFFERENT RESOURCES AROUND THE BUILDING AFFECT THE PRODUCTION?
+                    if (resourceFound != null)
+                    {
+                        resourceFound.AmounLeft -= resourceFound.PerTickUsedAmount * Time.deltaTime;
+                        if (resourceFound.AmounLeft <= 0)
+                        {
+                            resourceFound.AmounLeft = 0;
+                            DestroyResource(resourceFound);
+                        }
+                    }
+
+                    if (requiresResource && resourceFound == null)
+                    {
+                        continue;
+                    }
+
                     var amount = building.ResourcesProducedAmounts[i];
-                    //amount *= resourcesFound;                    
 
                     amount *= workers;
 
@@ -327,7 +448,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var categories = BuildingResourceCostCategories[buildingType];
             var amounts = BuildingResourceCostAmounts[buildingType];
 
-            for (int i = 0; i < categories.Count;i++)
+            for (int i = 0; i < categories.Count; i++)
             {
                 var category = categories[i];
                 var categoryIndex = (int)category;
@@ -354,7 +475,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void Update()
         {
-            ProduceResources();            
+            ProduceResources();
 
             YearTimeLeft -= Time.deltaTime * YearTimeSpeed;
             if (YearTimeLeft <= 0)
@@ -400,8 +521,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     .ResourceCostAmounts
                     .ToList();
             }
-            
+
             Buildings = new Dictionary<Tuple<float, float>, BuildingBehaviour>();
+            ResourceObjects = new Dictionary<Tuple<float, float>, ResourceBehaviour>();
 
             var resources = Enum
                 .GetValues(typeof(ProduceableResourceCategory));
@@ -417,7 +539,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             AvailableWorkers = new int[workers.Length];
 
-            YearTimeLeft = YearTimeToStart;            
+            YearTimeLeft = YearTimeToStart;
 
             AllYearEndGoals = new List<List<Tuple<ProduceableResourceCategory, float>>>();
 
@@ -435,9 +557,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
             ChristmasCheer = StartingChristmasCheer;
 
             UpdateCheerBar();
-            CreateWorldMap();            
+            CreateWorldMap();
         }
-       
+
         #endregion
     }
 }

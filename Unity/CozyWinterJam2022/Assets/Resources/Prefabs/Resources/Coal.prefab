@@ -96,3 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b24788816d41a4b94e5eea022d0a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ResourceCategory: 3
+  StartingAmount: 60
+  PerTickUsedAmount: 1
