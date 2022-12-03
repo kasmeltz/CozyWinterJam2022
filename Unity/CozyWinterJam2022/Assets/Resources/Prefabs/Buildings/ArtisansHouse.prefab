@@ -229,22 +229,22 @@ MonoBehaviour:
   ProgressBarOffset: {x: -50, y: -40}
   BuildSeconds: 10
   BuildSpeed: 1
-  BuildingType: 3
-  MaxWorkers: 5
-  WorkerCategory: 0
+  BuildingType: 10
+  MaxWorkers: 7
+  WorkerCategory: 1
   ResourceCostCategories: 050000000000000002000000
   ResourceCostAmounts:
-  - 50
+  - 150
+  - 25
   - 20
-  - 5
   ResourcesProducedCategories: 05000000
   ResourcesProducedAmounts:
-  - 0.083333336
+  - 0.16666667
   ResourcesConsumedCategories: 01000000
   ResourcesConsumedAmounts:
-  - 0.008333334
-  WorkersProducedCategories: 00000000
-  WorkersProducedAmounts: 05000000
+  - 0.016666668
+  WorkersProducedCategories: 01000000
+  WorkersProducedAmounts: 07000000
 --- !u!65 &-7237671921177556450
 BoxCollider:
   m_ObjectHideFlags: 0
