@@ -45,8 +45,24 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     .gameObject
                     .SetActive(true);
 
+                string goalName = "";
+
+                switch (goal.Item1)
+                {
+                    case ProduceableResourceCategory.Present1:
+                        goalName = "Simple Presents";
+                        break;
+                    case ProduceableResourceCategory.Present2:
+                        goalName = "Advanced Presents";
+                        break;
+                    case ProduceableResourceCategory.Present3:
+                        goalName = "Technlogical Presents";
+                        break;
+
+                }
+
                 textObject
-                    .text = $"Create {goal.Item2} {goal.Item1}s";
+                    .text = $"Create {goal.Item2} {goalName}";
             }
         }
         
