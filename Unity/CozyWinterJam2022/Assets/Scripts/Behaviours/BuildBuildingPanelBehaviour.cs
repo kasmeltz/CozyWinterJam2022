@@ -47,7 +47,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 }
 
                 var sprites = Resources
-                    .LoadAll<Sprite>("Images/Placeholder_Icons-Sheet");
+                    .LoadAll<Sprite>("Images/resource_icons");
 
                 Images[i]
                     .gameObject
@@ -63,15 +63,15 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 int imageIndex = 0;
                 switch(category)
                 {
-                    case ProduceableResourceCategory.Cookies:
+                    case ProduceableResourceCategory.Food:
                         imageIndex = 0;
                         break;
 
-                    case ProduceableResourceCategory.Food:
+                    case ProduceableResourceCategory.Wood:
                         imageIndex = 1;
                         break;
 
-                    case ProduceableResourceCategory.Wood:
+                    case ProduceableResourceCategory.Coal:
                         imageIndex = 2;
                         break;
 
@@ -79,9 +79,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
                         imageIndex = 3;
                         break;
 
-                    case ProduceableResourceCategory.Coal:
+                    case ProduceableResourceCategory.Cookies:
                         imageIndex = 4;
-                        break;
+                        break;                                        
 
                     case ProduceableResourceCategory.Present1:
                         imageIndex = 5;
