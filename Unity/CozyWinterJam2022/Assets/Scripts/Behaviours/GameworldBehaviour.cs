@@ -552,17 +552,17 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var currentAudioSource = AudioSources[CurrentAudioSourceIndex];
             var otherAudioSource = AudioSources[OtherAudioSourceIndex];
 
-            float time = 0;
+            //float time = 0;
             if (otherAudioSource.isPlaying)
             {
-                time = otherAudioSource.time;
+                //time = otherAudioSource.time;
             }
 
             currentAudioSource
                 .Stop();
 
             currentAudioSource.clip = MusicSongs[index];
-            currentAudioSource.time = time;
+            //currentAudioSource.time = time;
             currentAudioSource
                 .Play();
 

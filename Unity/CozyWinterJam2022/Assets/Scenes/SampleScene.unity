@@ -10679,7 +10679,7 @@ MonoBehaviour:
   AudioSources:
   - {fileID: 2094830459}
   - {fileID: 1361474223}
-  MusicSegmentLength: 45
+  MusicSegmentLength: 93
 --- !u!4 &1630717337
 Transform:
   m_ObjectHideFlags: 0
