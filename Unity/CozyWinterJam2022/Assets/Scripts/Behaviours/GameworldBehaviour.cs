@@ -22,6 +22,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public float StartingChristmasCheer;
         public float ChristmasCheerPerYearEnd;
 
+        public Image BuildingWorkersPanel;
         public Image ChristmasCheerbar;
 
         public AudioSource SoundEffectSource;
@@ -576,6 +577,10 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .Clear();
            
             BuildBuilding(0, 0, BuildingType.SantasWorkshop);
+
+            BuildingWorkersPanel
+                .gameObject
+                .SetActive(false);
         }
 
         protected void Update()

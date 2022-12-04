@@ -10794,6 +10794,7 @@ MonoBehaviour:
   MaxChristmasCheer: 1000
   StartingChristmasCheer: 500
   ChristmasCheerPerYearEnd: 100
+  BuildingWorkersPanel: {fileID: 608687291}
   ChristmasCheerbar: {fileID: 854329761}
   SoundEffectSource: {fileID: 813719317}
   BuildingSFX: {fileID: 8300000, guid: 09fc0b731538ec149aafc0b1b5597c92, type: 3}
