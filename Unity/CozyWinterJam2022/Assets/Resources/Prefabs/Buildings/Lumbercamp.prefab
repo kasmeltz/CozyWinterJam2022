@@ -59,14 +59,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.15586257, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 66e7f6ebef4aaa14ca446d32ec68525d, type: 3}
+  m_Sprite: {fileID: 358816730, guid: 353364d8ae0c40344b405ffb4d2c48eb, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProgressBarBackground: {fileID: 4204789461830011460}
   ProgressBarForeground: {fileID: 738675641264707054}
-  ProgressBarOffset: {x: -50, y: -40}
+  ProgressBarOffset: {x: -50, y: -30}
   BuildSeconds: 10
   BuildSpeed: 1
   BuildingType: 0
@@ -316,14 +316,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.10030261, g: 0.4339623, b: 0.2214979, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 66e7f6ebef4aaa14ca446d32ec68525d, type: 3}
+  m_Sprite: {fileID: -780438338, guid: 353364d8ae0c40344b405ffb4d2c48eb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
