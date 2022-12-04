@@ -16,6 +16,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public Sprite SantaSprite;
         public Sprite AdvisorSprite;
+        public Sprite ElfHatSprite;
 
         public List<DialogLine[]> Lines { get; set; }
 
