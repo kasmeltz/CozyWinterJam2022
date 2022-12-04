@@ -27,6 +27,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public AudioSource SoundEffectSource;
 
         public AudioClip BuildingSFX;
+        public AudioClip WinSFX;
+        public AudioClip LoseSFX;
 
         public Image WonPanel;
 
@@ -299,10 +301,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             if (passedYear)
             {
+                SoundEffectSource
+                    .PlayOneShot(WinSFX, 1);
                 ChristmasCheer += ChristmasCheerPerYearEnd;
             }
             else
             {
+                SoundEffectSource
+                    .PlayOneShot(LoseSFX, 1);
                 ChristmasCheer -= ChristmasCheerPerYearEnd;
             }
 

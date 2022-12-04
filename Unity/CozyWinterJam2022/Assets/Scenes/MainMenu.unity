@@ -8872,7 +8872,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Santa's Cozy City
+  m_text: Christmas Empire
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d6811fc02c51a4d468dc5e3b3f76bf81, type: 2}
   m_sharedMaterial: {fileID: -871277919242844423, guid: d6811fc02c51a4d468dc5e3b3f76bf81, type: 2}
