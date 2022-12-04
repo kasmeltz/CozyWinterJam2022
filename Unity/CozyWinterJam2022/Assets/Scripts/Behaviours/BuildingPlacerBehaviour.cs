@@ -35,27 +35,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void BuildBuilding(float x, float z)
         {
-            if (Gameworld
-                .BuildingExists(x, z))
-            {
-                return;
-            }
-           
-            var prefab = Resources
-                .Load<BuildingBehaviour>($"Prefabs/Buildings/{TypeToBuild}");
-
-            var building = Instantiate(prefab);
-
-            building.transform.position = transform.position;
-
-            building
-                .PositionProgressBar();
+            Gameworld
+                .BuildBuilding(x, z, TypeToBuild);
 
             gameObject
                 .SetActive(false);
-
-            Gameworld
-                .AddBuilding(x, z, building);
         }
 
         protected void UpdateUI()

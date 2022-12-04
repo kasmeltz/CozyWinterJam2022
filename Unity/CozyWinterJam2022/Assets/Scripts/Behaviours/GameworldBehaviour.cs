@@ -96,14 +96,18 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 }
             }
 
-            /*
             if (Buildings.Count > 1)
             {
                 var roads = FindObjectOfType<RoadsBehaviour>();
 
                 var firstVertex = new Vector3(building.transform.position.x, -0.5f, building.transform.position.z);
-                var secondVertex = new Vector3(building.transform.position.x, -0.5f, building.transform.position.z);
+                var secondVertex = new Vector3(0, -0.5f, 0);
 
+                roads
+                    .AddRoads(firstVertex, secondVertex);
+
+                /*
+                 //var secondVertex = new Vector3(building.transform.position.x, -0.5f, building.transform.position.z);
                 float minDistance = float.MaxValue;
                 foreach (var kvp in Buildings)
                 {
@@ -121,18 +125,40 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     }
                 }
 
+                
                 roads
                     .AddRoads(firstVertex, secondVertex);
-
-                //roads
-                    //.AddRoads(firstVertex, new Vector3(0,-0.5f,0));
+                */
             }
-            */
         }
 
         #endregion
 
         #region Methods
+
+        public void BuildBuilding(float x, float z, BuildingType buildingType)
+        {
+
+            if (BuildingExists(x, z))
+            {
+                return;
+            }
+
+            var prefab = Resources
+                .Load<BuildingBehaviour>($"Prefabs/Buildings/{buildingType}");
+
+            var building = Instantiate(prefab);
+
+            building.transform.position = new Vector3(x, 0, z);
+
+            building
+                .PositionProgressBar();
+
+            gameObject
+                .SetActive(false);
+            
+            AddBuilding(x, z, building);
+        }
 
         public bool BuildingExists(float x, float z)
         {
@@ -577,6 +603,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             UpdateCheerBar();
             CreateWorldMap();
+
+            BuildBuilding(0, 0, BuildingType.Workshop1);
         }
 
         #endregion
