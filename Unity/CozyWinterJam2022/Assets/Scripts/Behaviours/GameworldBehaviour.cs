@@ -28,6 +28,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public AudioClip BuildingSFX;
 
+        public Image WonPanel;
+
         public Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
 
         public Dictionary<Tuple<float, float>, ResourceBehaviour> ResourceObjects { get; set; }
@@ -169,6 +171,26 @@ namespace HNS.CozyWinterJam2022.Behaviours
             }
         }
 
+        public void DestroyBuilding(BuildingBehaviour building)
+        {
+            var key = new Tuple<float, float>(building.transform.position.x, building.transform.position.z);
+
+            if(!Buildings.ContainsKey(key))
+            {
+                return;
+            }
+
+            if (Buildings[key] != building)
+            {
+                return;
+            }
+
+            Buildings
+                .Remove(key);
+
+            Destroy(building.gameObject);
+
+        }
         public void DestroyResource(ResourceBehaviour resourceBehaviour)
         {
             var key = new Tuple<float, float>(resourceBehaviour.transform.position.x + 25, resourceBehaviour.transform.position.z + 25);
@@ -178,7 +200,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 return;
             }
 
-            if (!ResourceObjects[key] == resourceBehaviour)
+            if (ResourceObjects[key] != resourceBehaviour)
             {
                 return;
             }
@@ -278,6 +300,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 }
 
                 Inventory[resourceCategoryIndex] -= amountRequired;
+                if (Inventory[resourceCategoryIndex] <= 0)
+                {
+                    Inventory[resourceCategoryIndex] = 0;
+                }
+
             }
 
             if (passedYear)
@@ -289,12 +316,20 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 ChristmasCheer -= ChristmasCheerPerYearEnd;
             }
 
-            UpdateCheerBar();
-            
+            UpdateCheerBar();            
             IsYearOver = true;
 
-            Dialogue
-                .ShowYearMessage(Year + 1);
+            if (passedYear)
+            {
+                Dialogue
+                    .ShowYearMessage(Year + 1);
+            }
+            else
+            {
+                Year--;
+                Dialogue
+                    .ShowYearMessage(Year + 1);
+            }
         }
 
         public ResourceBehaviour GetResourceSurroundingPosition(Vector3 position, ProduceableResourceCategory category)
@@ -512,6 +547,10 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             if (year >= AllYearEndGoals.Count)
             {
+                WonPanel
+                    .gameObject
+                    .SetActive(true);
+
                 return;
             }
 
@@ -521,7 +560,27 @@ namespace HNS.CozyWinterJam2022.Behaviours
             ToDoList
                 .SetGoals(CurrentYearEndGoals);
 
+            YearTimeLeft = YearTimeToStart;
             IsYearOver = false;
+
+            var roads = FindObjectOfType<RoadsBehaviour>();
+
+            roads
+                .ClearAllRoads();
+
+            var toDestroy = Buildings
+                .Values
+                .ToList();
+
+            foreach (var building in toDestroy)
+            {
+                DestroyBuilding(building);
+            }
+
+            Buildings
+                .Clear();
+           
+            BuildBuilding(0, 0, BuildingType.SantasWorkshop);
         }
 
         protected void Update()
@@ -599,9 +658,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var workers = Enum
                .GetValues(typeof(WorkerCategory));
 
-            AvailableWorkers = new int[workers.Length];
-
-            YearTimeLeft = YearTimeToStart;
+            AvailableWorkers = new int[workers.Length];           
 
             AllYearEndGoals = new List<List<Tuple<ProduceableResourceCategory, float>>>();
 
@@ -618,8 +675,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             UpdateCheerBar();
             CreateWorldMap();
-
-            BuildBuilding(0, 0, BuildingType.SantasWorkshop);
         }
 
         #endregion

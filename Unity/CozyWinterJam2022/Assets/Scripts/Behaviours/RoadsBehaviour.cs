@@ -34,6 +34,21 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .Add(lineRenderer);
         }
 
+        public void ClearAllRoads()
+        {
+            var toDestroy = new List<LineRenderer>();
+            toDestroy
+                .AddRange(RoadLines);
+
+            foreach(var line in toDestroy)
+            {
+                Destroy(line.gameObject);
+            }
+
+            RoadLines
+                .Clear();
+        }
+
         protected void Awake()
         {
             RoadLines = new List<LineRenderer>();
