@@ -11447,7 +11447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19822763, g: 0.7169812, b: 0.1792453, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11484,14 +11484,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae331b001f277d4a9203d3368163265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text1: {fileID: 1339551641}
-  Text2: {fileID: 1677216598}
-  Text3: {fileID: 1239465747}
-  Text4: {fileID: 489408618}
-  Image1: {fileID: 1611973043}
-  Image2: {fileID: 1984677994}
-  Image3: {fileID: 504492373}
-  Image4: {fileID: 1973433078}
+  Texts:
+  - {fileID: 1339551641}
+  - {fileID: 1677216598}
+  - {fileID: 1239465747}
+  - {fileID: 489408618}
+  Images:
+  - {fileID: 1611973043}
+  - {fileID: 1984677994}
+  - {fileID: 504492373}
+  - {fileID: 1973433078}
 --- !u!114 &1835331813
 MonoBehaviour:
   m_ObjectHideFlags: 0
