@@ -297,8 +297,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 {
                     Inventory[resourceCategoryIndex] = 0;
                 }
-
             }
+
+            Inventory[(int)ProduceableResourceCategory.Present1] = 0;
 
             if (passedYear)
             {
@@ -550,6 +551,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 return;
             }
 
+            Inventory[(int)ProduceableResourceCategory.Food] = 100;
+            Inventory[(int)ProduceableResourceCategory.Wood] = 200;
+            Inventory[(int)ProduceableResourceCategory.Cookies] = 500;
+            Inventory[(int)ProduceableResourceCategory.Gingerbread] = 100;
+
             CurrentYearEndGoals = AllYearEndGoals[year];
             Year = year;
 
@@ -650,10 +656,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .GetValues(typeof(ProduceableResourceCategory));
 
             Inventory = new float[resources.Length];
-            Inventory[(int)ProduceableResourceCategory.Food] = 100;
-            Inventory[(int)ProduceableResourceCategory.Wood] = 200;
-            Inventory[(int)ProduceableResourceCategory.Cookies] = 500;
-            Inventory[(int)ProduceableResourceCategory.Gingerbread] = 100;
 
             var workers = Enum
                .GetValues(typeof(WorkerCategory));
