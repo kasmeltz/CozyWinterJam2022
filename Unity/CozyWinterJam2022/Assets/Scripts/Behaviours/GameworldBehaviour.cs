@@ -44,14 +44,13 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public List<Tuple<ProduceableResourceCategory, float>> CurrentYearEndGoals { get; set; }
 
+        public Dictionary<BuildingType, List<ProduceableResourceCategory>> BuildingResourceCostCategories { get; set; }
+
+        public Dictionary<BuildingType, List<float>> BuildingResourceCostAmounts { get; set; }
+
         protected ToDoListBehaviour ToDoList { get; set; }
 
-        protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; }
-
-
-        protected Dictionary<BuildingType, List<ProduceableResourceCategory>> BuildingResourceCostCategories { get; set; }
-
-        protected Dictionary<BuildingType, List<float>> BuildingResourceCostAmounts { get; set; }
+        protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; }       
 
         #endregion
 

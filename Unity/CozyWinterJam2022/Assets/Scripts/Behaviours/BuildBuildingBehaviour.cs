@@ -2,15 +2,18 @@ namespace HNS.CozyWinterJam2022.Behaviours
 {
     using HNS.CozyWinterJam2022.Models;
     using UnityEngine;
+    using UnityEngine.EventSystems;
 
     [AddComponentMenu("CWJ2022/BuildBuilding")]
 
-    public class BuildBuildingBehaviour : MonoBehaviour
+    public class BuildBuildingBehaviour : MonoBehaviour, IPointerEnterHandler
     {
         #region Members
 
         public BuildingType BuildingType;
         public BuildingPlacerBehaviour BuildingPlacer;
+        
+        protected BuildBuildingPanelBehaviour BuildBuildingPanel { get; set; }
 
         #endregion
 
@@ -24,6 +27,22 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .gameObject
                 .SetActive(true);
         }
+     
+        protected void Awake()
+        {
+            BuildBuildingPanel = FindObjectOfType<BuildBuildingPanelBehaviour>(true);
+        }
+
+        #endregion
+
+        #region IPointerEnterHandler
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            BuildBuildingPanel
+                .ShowCost(BuildingType);
+        }
+
 
         #endregion
     }

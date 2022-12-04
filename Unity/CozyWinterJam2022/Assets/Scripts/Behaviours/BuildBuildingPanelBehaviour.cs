@@ -1,5 +1,7 @@
 namespace HNS.CozyWinterJam2022.Behaviours
 {
+    using HNS.CozyWinterJam2022.Models;
+    using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
 
@@ -8,6 +10,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
     public class BuildBuildingPanelBehaviour : MonoBehaviour
     {
         #region Members
+
+        public TMP_Text[] Texts;
+        public Image[] Images;
 
         protected BuildingPlacerBehaviour BuildingPlacer { get; set; }       
 
@@ -21,6 +26,77 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         #region Methods
 
+        public void ShowCost(BuildingType buildingType)
+        {
+            var categories = Gameworld.BuildingResourceCostCategories[buildingType];
+            var amounts = Gameworld.BuildingResourceCostAmounts[buildingType];
+
+            for(int i =0;i < Images.Length;i++)
+            {
+                if (i >= categories.Count)
+                {
+                    Images[i]
+                        .gameObject
+                        .SetActive(false);
+
+                    Texts[i]
+                        .gameObject
+                        .SetActive(false);
+
+                    continue;
+                }
+
+                var sprites = Resources
+                    .LoadAll<Sprite>("Images/Placeholder_Icons-Sheet");
+
+                Images[i]
+                    .gameObject
+                    .SetActive(true);
+
+                Texts[i]
+                    .gameObject
+                    .SetActive(true);
+          
+                var category = categories[i];
+                var amount = amounts[i];
+
+                int imageIndex = 0;
+                switch(category)
+                {
+                    case ProduceableResourceCategory.Cookies:
+                        imageIndex = 0;
+                        break;
+
+                    case ProduceableResourceCategory.Food:
+                        imageIndex = 1;
+                        break;
+
+                    case ProduceableResourceCategory.Wood:
+                        imageIndex = 2;
+                        break;
+
+                    case ProduceableResourceCategory.Gingerbread:
+                        imageIndex = 3;
+                        break;
+
+                    case ProduceableResourceCategory.Coal:
+                        imageIndex = 4;
+                        break;
+
+                    case ProduceableResourceCategory.Present1:
+                        imageIndex = 5;
+                        break;
+
+                    case ProduceableResourceCategory.Present2:
+                        imageIndex = 6;
+                        break;
+                }
+
+                Texts[i].text = $"{amount}";
+                Images[i].sprite = sprites[imageIndex];
+            }
+        }
+
         public void SelectBuildingType()
         {            
             transform.localScale = new Vector3(0, 0, 0);
@@ -32,6 +108,20 @@ namespace HNS.CozyWinterJam2022.Behaviours
             Gameworld = FindObjectOfType<GameworldBehaviour>(true);
 
             transform.localScale = new Vector3(0, 0, 0);
+            
+            foreach(var image in Images)
+            {
+                image
+                    .gameObject
+                    .SetActive(false);
+            }
+
+            foreach (var text in Texts)
+            {
+                text
+                    .gameObject
+                    .SetActive(false);
+            }
         }
 
         protected void Update()
