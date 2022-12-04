@@ -13,6 +13,7 @@
         Workshop3 = 8,
         Refinery = 9,
         ArtisansHouse = 10,
-        ArtificersHouse = 10,
+        ArtificersHouse = 11,
+        SantasWorkshop = 12,
     }
 }

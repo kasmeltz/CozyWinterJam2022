@@ -243,8 +243,19 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             int resourceCategoryIndex = (int)resourceCategory;
 
+            var prefabName = $"{resourceCategory}";
+
+            if (resourceCategory == ProduceableResourceCategory.Wood)
+            {
+                int treeType = UnityEngine
+                    .Random
+                    .Range(1, 5);
+
+                prefabName = $"Wood_{treeType}";
+            }
+
             var prefab = Resources
-                .Load<ResourceBehaviour>($"Prefabs/Resources/{resourceCategory}");
+                .Load<ResourceBehaviour>($"Prefabs/Resources/{prefabName}");
 
             var resourceObject = Instantiate(prefab);
             resourceObject.transform.position = new Vector3(x - 25, 0, z - 25);
@@ -643,13 +654,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 [BuildingType.Farm] = true,
                 [BuildingType.HuntingLodge] = false,
                 [BuildingType.GingerbreadQuarry] = true,
-                [BuildingType.CoalMine] = false,
+                [BuildingType.CoalMine] = true,
                 [BuildingType.Workshop1] = true,
                 [BuildingType.Workshop2] = false,
                 [BuildingType.Workshop3] = false,
                 [BuildingType.Refinery] = false,
                 [BuildingType.ArtisansHouse] = true,
-                [BuildingType.ArtificersHouse] = false
+                [BuildingType.ArtificersHouse] = false,
+                [BuildingType.SantasWorkshop] = false
             };
 
             BuildingResourceCostCategories = new Dictionary<BuildingType, List<ProduceableResourceCategory>>();
@@ -709,7 +721,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             UpdateCheerBar();
             CreateWorldMap();
 
-            BuildBuilding(0, 0, BuildingType.Workshop1);
+            BuildBuilding(0, 0, BuildingType.SantasWorkshop);
         }
 
         #endregion
