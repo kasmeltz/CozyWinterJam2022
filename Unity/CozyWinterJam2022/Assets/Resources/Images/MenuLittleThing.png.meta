@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0d6f4b0aac278a84da09dd75dfe52067
+guid: 2468f5564085d2841b3cc780f607ab6e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -42,14 +42,14 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -117,22 +117,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MenuSantaSprite_0
+      name: MenuLittleThing_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 2048
-        height: 2034
+        x: 116
+        y: 343
+        width: 639
+        height: 141
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27316960f22d48843a2805444c9215e3
-      internalID: -2057531810
+      spriteID: ccd0686b79cbf57499feae030e4b5731
+      internalID: 548544958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuLittleThing_1
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 213
+        width: 132
+        height: 221
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e87997e5fe6552144b261ee7080603e0
+      internalID: 677670525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuLittleThing_2
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 153
+        width: 747
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02cba03e686842445921e87d47518cc6
+      internalID: -2122319669
       vertices: []
       indices: 
       edges: []
@@ -140,15 +182,17 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: e0e82e4e15179bc498b480a53e32bb74
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MenuSantaSprite_0: -2057531810
+      MenuLittleThing_0: 963730293
+      MenuLittleThing_2: -1618622541
+      MenuLittleThing_1: 914227618
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
