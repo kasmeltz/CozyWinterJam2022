@@ -16,6 +16,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public Sprite SantaSprite;
         public Sprite AdvisorSprite;
+        public Sprite AdvisorPissedSprite;
         public Sprite ElfHatSprite;
 
         public List<DialogLine[]> Lines { get; set; }
@@ -33,9 +34,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
             var year0Lines = new DialogLine[]
             {
                 new DialogLine("<i>*Once upon a time, on one cosy day at the North Pole.*</i>", false, null, null),
-                new DialogLine("... You want to do WHAT?!", true, SantaSprite, AdvisorSprite),
+                new DialogLine("... You want to do WHAT?!", true, SantaSprite, AdvisorPissedSprite),
                 new DialogLine("Deliver Presents to all the children of the world.", false, SantaSprite, AdvisorSprite),
-                new DialogLine("THE WORLD?! Do you have any idea how many children there are in the world? THE PLANNING, the Infastructure!", true, SantaSprite, AdvisorSprite),
+                new DialogLine("THE WORLD?! Do you have any idea how many children there are in the world? THE PLANNING, the Infastructure!", true, SantaSprite, AdvisorPissedSprite),
                 new DialogLine("You have lost your mind!", true, SantaSprite, AdvisorSprite),
                 new DialogLine("Perhaps...", false, SantaSprite, AdvisorSprite),
                 new DialogLine("... ", false, SantaSprite, AdvisorSprite),
@@ -56,19 +57,31 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             var year1Lines = new DialogLine[]
             {
-                new DialogLine("This is year 2", false, null, null),
+                new DialogLine("Hope the production of those <i>100 Simple Presents</i> went off without a hitch. But those are rookie numbers we will simply have to pump up.", true, null, AdvisorSprite),
+                new DialogLine("How about this time we do <b>300 Simple Presents</b>, hm?", true, null, AdvisorSprite)
             };
 
             Lines
                 .Add(year1Lines);
-
+            
             var year2Lines = new DialogLine[]
             {
-                new DialogLine("This is year 3", false, null, null),
+                new DialogLine("First they have us do 100 Presents, then 300 Simple Presents... And now word is Santa is demanding <b>700 Simple Presents</b>?!", false, ElfHatSprite, AdvisorSprite),
+                new DialogLine("Suck it up, Buttercup. Santa does not pay you for whining. Now get to work making those <b>700 Simple Presents</b>.", true, ElfHatSprite, AdvisorPissedSprite)
             };
 
             Lines
                 .Add(year2Lines);
+
+            var year3Lines = new DialogLine[]
+            {
+                new DialogLine("Hey there, you are still around? Impressive. You do realize this is the end of the game though, right? Sadly nothing beyond this point, however I commend you for getting this far.", true, null, AdvisorSprite),
+                new DialogLine("Perhaps we will see each other again in the future. Until then I hope you have a splendid rest of the season.", true, null, AdvisorSprite),
+                new DialogLine("It has been an honor, <i>Overseer.</i>", true, null, AdvisorSprite)
+            };
+
+            Lines
+                .Add(year3Lines);
         }
 
         void Start()

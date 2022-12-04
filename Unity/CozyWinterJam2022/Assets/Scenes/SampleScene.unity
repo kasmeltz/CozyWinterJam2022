@@ -12183,6 +12183,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: fa98b0e089d19414383c50aaf7d27efe, type: 3}
     - target: {fileID: 2834326177073122387, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
+      propertyPath: AdvisorPissedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ef3cec3b108d734fbe21b0ad42cff1d, type: 3}
+    - target: {fileID: 2834326177073122387, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: Lines.Array.data[0]
       value: Hello how are you?
       objectReference: {fileID: 0}

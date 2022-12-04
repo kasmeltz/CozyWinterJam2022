@@ -543,9 +543,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             if (year >= AllYearEndGoals.Count)
             {
-                WonPanel
-                    .gameObject
-                    .SetActive(true);
+                Dialogue
+                    .ShowYearMessage(3);
 
                 return;
             }
