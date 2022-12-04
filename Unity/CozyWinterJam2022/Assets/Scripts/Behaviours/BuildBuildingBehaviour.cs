@@ -3,6 +3,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
     using HNS.CozyWinterJam2022.Models;
     using UnityEngine;
     using UnityEngine.EventSystems;
+    using UnityEngine.UI;
 
     [AddComponentMenu("CWJ2022/BuildBuilding")]
 
@@ -31,6 +32,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
         protected void Awake()
         {
             BuildBuildingPanel = FindObjectOfType<BuildBuildingPanelBehaviour>(true);
+            
+            //GetComponent<Image>()
+               //.alphaHitTestMinimumThreshold = 0.1f;
         }
 
         #endregion

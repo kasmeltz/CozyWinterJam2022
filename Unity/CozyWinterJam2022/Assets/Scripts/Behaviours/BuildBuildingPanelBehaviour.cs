@@ -90,6 +90,10 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     case ProduceableResourceCategory.Present2:
                         imageIndex = 6;
                         break;
+
+                    case ProduceableResourceCategory.Steel:
+                        imageIndex = 7;
+                        break;
                 }
 
                 Texts[i].text = $"{amount}";

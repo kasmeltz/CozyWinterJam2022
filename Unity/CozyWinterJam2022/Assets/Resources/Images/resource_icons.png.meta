@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c68cb3ca59ce6ba4e98dd9e6e9793ddb
+guid: b20890ef69fee054f9e862d43008f425
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa4f2af08bb975143aacd13f64e770d0
-      internalID: 985506299
+      spriteID: 7a3138a5b1c5f3949b98e1dbea535c33
+      internalID: -824658901
       vertices: []
       indices: 
       edges: []
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 568e2f43ac734fb4ab38b86de8fb04e0
-      internalID: 172943711
+      spriteID: 956e6b216d5dfee4eaec53a8b27e2a62
+      internalID: -1317628818
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2f1b1aff0f950348abb7ed078222ea5
-      internalID: 956693871
+      spriteID: 2749988f718f6ea468999e80b66aa178
+      internalID: -1167280424
       vertices: []
       indices: 
       edges: []
@@ -194,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dfeb7a2dbde5b44d8442bea8a3c6785
-      internalID: 1611219743
+      spriteID: c9d38f04c7ff4524cae040760ab6242f
+      internalID: 511321964
       vertices: []
       indices: 
       edges: []
@@ -215,8 +215,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf36c44a3e623f541880703b2d4ab5b9
-      internalID: 433675163
+      spriteID: 9709c7ec0352fad4bb99b51bcb2835ec
+      internalID: -470755042
       vertices: []
       indices: 
       edges: []
@@ -236,8 +236,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b1ab4d6622cfdf499771de4d15b8ab3
-      internalID: -779769065
+      spriteID: 0c0dce2b6990df84ca8c03bfec91a50e
+      internalID: -1851815548
       vertices: []
       indices: 
       edges: []
@@ -257,8 +257,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dbe570e9463041b4c9f2b7bc5881d2d3
-      internalID: 1456652676
+      spriteID: 50810e2fc4a56034392b3452f48f122c
+      internalID: -1129122115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: resource_icons_7
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 0.6666565
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ade84919554b854385e28c74cdd3bd3
+      internalID: 1765433495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: resource_icons_8
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 0.6666565
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a262600e3a16b641841cc92c6cd841e
+      internalID: -731845155
       vertices: []
       indices: 
       edges: []
@@ -266,7 +308,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: ddb5e47a4a25bc845aa329996d22a5e5
+    spriteID: 94f88873e26e91c4fa346c3f7a5ba077
     internalID: 0
     vertices: []
     indices: 
@@ -274,13 +316,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      resource_icons_4: 433675163
-      resource_icons_0: 985506299
-      resource_icons_2: 956693871
-      resource_icons_1: 172943711
-      resource_icons_3: 1611219743
-      resource_icons_5: -779769065
-      resource_icons_6: 1456652676
+      resource_icons_4: -470755042
+      resource_icons_0: -824658901
+      resource_icons_2: -1167280424
+      resource_icons_1: -1317628818
+      resource_icons_3: 511321964
+      resource_icons_5: -1851815548
+      resource_icons_8: -731845155
+      resource_icons_6: -1129122115
+      resource_icons_7: 1765433495
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
