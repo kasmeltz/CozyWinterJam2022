@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueBehaviour : MonoBehaviour
 {
+    public TMP_Text ButtonText;
     public Image SpeakerLeftImage;
     public Image SpeakerRightImage;
-    public TMPro.TextMeshProUGUI text;
+    public TextMeshProUGUI text;
     public string[] Lines;
     public bool[] IsSelf;
     int LinesPlace = 0;
@@ -37,11 +39,29 @@ public class DialogueBehaviour : MonoBehaviour
 
         text.text = "";
         StartCoroutine(PrintText(Lines[LinesPlace]));
+
+        if (LinesPlace == Lines.Length - 1)
+        {
+            ButtonText.text = "Done";
+        }
+        else
+        {
+            ButtonText.text = "Next";
+        }
     }
 
     public void NextText()
     {
         LinesPlace++;
+
+        if(LinesPlace >= Lines.Length)
+        {
+            gameObject
+                .SetActive(false);
+
+            return;
+        }
+
         DisplayText(LinesPlace);
     }
 

@@ -24,12 +24,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public Image ChristmasCheerbar;
 
-        public AudioClip[] MusicSongs;
-
-        public AudioSource[] AudioSources;
-
-        public float MusicSegmentLength;
-
         public AudioSource SoundEffectSource;
 
         public AudioClip BuildingSFX;
@@ -63,21 +57,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
         protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; } 
         
         protected bool IsYearOver { get; set; }
-
-        protected int CurrentMusic { get; set; }
-
-        protected int CurrentAudioSourceIndex { get; set; }
-
-        protected int OtherAudioSourceIndex { get; set; }
-
-        protected float CurrentMusicTimer { get; set; }
-
-        protected float FadeOutVolume { get; set; }
-
-        protected float FadeInVolume { get; set; }
-
-        protected bool MusicIsFading { get; set; }
-
+        
         #endregion
 
         #region Event Handlers
@@ -557,40 +537,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .SetGoals(CurrentYearEndGoals);
         }
 
-        protected void ChangeMusic(int index)
-        {
-            if (index > 5)
-            {
-                return;
-            }
-
-            OtherAudioSourceIndex = 1 - CurrentAudioSourceIndex;
-
-            var currentAudioSource = AudioSources[CurrentAudioSourceIndex];
-            var otherAudioSource = AudioSources[OtherAudioSourceIndex];
-
-            //float time = 0;
-            if (otherAudioSource.isPlaying)
-            {
-                //time = otherAudioSource.time;
-            }
-
-            currentAudioSource
-                .Stop();
-
-            currentAudioSource.clip = MusicSongs[index];
-            //currentAudioSource.time = time;
-            currentAudioSource
-                .Play();
-
-            FadeInVolume = 0;
-            FadeOutVolume = 1;
-
-            MusicIsFading = true;
-            CurrentMusic = index;
-            CurrentMusicTimer = MusicSegmentLength;
-        }
-
         protected void Update()
         {
             if (IsYearOver)
@@ -604,49 +550,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
             if (YearTimeLeft <= 0)
             {
                 DoEndOfYear();
-            }
-
-            if (MusicIsFading)
-            {
-                FadeInVolume += Time.deltaTime;
-                if (FadeInVolume >= 1)
-                {
-                    FadeInVolume = 1;
-                }
-
-                AudioSources[CurrentAudioSourceIndex].volume = FadeInVolume;
-
-                FadeOutVolume -= Time.deltaTime;
-                if (FadeOutVolume <= 0)
-                {
-                    FadeOutVolume = 0;
-                }
-
-                AudioSources[OtherAudioSourceIndex].volume = FadeOutVolume;
-
-                if (FadeInVolume == 1 && 
-                    FadeOutVolume == 0)
-                {
-                    MusicIsFading = false;
-                    AudioSources[OtherAudioSourceIndex]
-                        .Stop();
-
-                    CurrentAudioSourceIndex = OtherAudioSourceIndex;
-                }
-            }
-
-            CurrentMusicTimer -= Time.deltaTime;
-            if (CurrentMusicTimer <= 0)
-            {
-                ChangeMusic(CurrentMusic + 1);
-            }
+            }            
         }
 
         protected void Awake()
         {
-            CurrentAudioSourceIndex = 0;
-            ChangeMusic(0);
-
             BuildingTypesAvailable = new Dictionary<BuildingType, bool>
             {
                 [BuildingType.Lumbercamp] = true,
@@ -693,7 +601,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             Inventory = new float[resources.Length];
             Inventory[(int)ProduceableResourceCategory.Food] = 100;
             Inventory[(int)ProduceableResourceCategory.Wood] = 200;
-            Inventory[(int)ProduceableResourceCategory.Cookies] = 100;
+            Inventory[(int)ProduceableResourceCategory.Cookies] = 500;
             Inventory[(int)ProduceableResourceCategory.Gingerbread] = 100;
 
             var workers = Enum
