@@ -31,47 +31,39 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .SetActive(true);
         }
 
-        public void AddWorker(int workerType)
+        public void AddWorker()
         {
             if (SelectedBuilding == null)
             {
                 return;
             }
             
-            if ((int)SelectedBuilding.WorkerCategory != workerType)
-            {
-                return;
-            }
-
             if (SelectedBuilding.WorkersPresent >= SelectedBuilding.MaxWorkers)
             {
                 return;
             }
+
+            int workerType = (int)SelectedBuilding.WorkerCategory;
 
             var available = Gameworld.AvailableWorkers[workerType];
 
             if (available <= 0)
             {
                 return;
-            }
-            
-            
+            }                        
 
             Gameworld.AvailableWorkers[workerType]--;
             SelectedBuilding.WorkersPresent++;
         }
 
-        public void RemoveWorker(int workerType)
+        public void RemoveWorker()
         {
             if (SelectedBuilding == null)
             {
                 return;
             }
 
-            if ((int)SelectedBuilding.WorkerCategory != workerType)
-            {
-                return;
-            }
+            int workerType = (int)SelectedBuilding.WorkerCategory;
 
             var available = SelectedBuilding.WorkersPresent;
             if (available <= 0)
