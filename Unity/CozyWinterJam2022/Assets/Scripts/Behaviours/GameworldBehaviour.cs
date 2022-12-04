@@ -44,6 +44,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public float Year { get; set; }
 
+        public bool DialogueIsOpen { get; set; }
+
         public List<List<Tuple<ProduceableResourceCategory, float>>> AllYearEndGoals { get; set; }
 
         public List<Tuple<ProduceableResourceCategory, float>> CurrentYearEndGoals { get; set; }
@@ -106,35 +108,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
             {
                 var roads = FindObjectOfType<RoadsBehaviour>();
 
-                var firstVertex = new Vector3(building.transform.position.x, -0.5f, building.transform.position.z);
-                var secondVertex = new Vector3(0, -0.5f, 0);
+                var firstVertex = new Vector3(building.transform.position.x, 0f, building.transform.position.z);
+                var secondVertex = new Vector3(0, 0f, 0);
 
                 roads
                     .AddRoads(firstVertex, secondVertex);
-
-                /*
-                 //var secondVertex = new Vector3(building.transform.position.x, -0.5f, building.transform.position.z);
-                float minDistance = float.MaxValue;
-                foreach (var kvp in Buildings)
-                {
-                    var otherCoordinates = kvp.Key;
-
-                    var dx = otherCoordinates.Item1 - firstVertex.x;
-                    var dy = otherCoordinates.Item2 - firstVertex.z;
-
-                    var d = (dx * dx) + (dy * dy);
-                    if (d > 0 && d < minDistance)
-                    {
-                        minDistance = d;
-                        secondVertex.x = otherCoordinates.Item1;
-                        secondVertex.z = otherCoordinates.Item2;
-                    }
-                }
-
-                
-                roads
-                    .AddRoads(firstVertex, secondVertex);
-                */
             }
         }
 
@@ -540,6 +518,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
         protected void Update()
         {
             if (IsYearOver)
+            {
+                return;
+            }
+
+            if (DialogueIsOpen)
             {
                 return;
             }

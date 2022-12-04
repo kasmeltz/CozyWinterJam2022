@@ -55,6 +55,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void OnMouseDown()
         {
+            if (MaxWorkers <= 0)
+            {
+                return;
+            }
+
             var buildingWorkerPabel = FindObjectOfType<BuildingWorkerPanelBehaviour>(true);
 
             buildingWorkerPabel

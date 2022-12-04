@@ -14,6 +14,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public TMP_Text[] Texts;
         public Image[] Images;
 
+        public Image Ring1;
+        public Image Ring2;
+
         protected BuildingPlacerBehaviour BuildingPlacer { get; set; }       
 
         protected GameworldBehaviour Gameworld { get; set; }
@@ -25,6 +28,30 @@ namespace HNS.CozyWinterJam2022.Behaviours
         #endregion
 
         #region Methods
+
+        public void ChangeRing()
+        {
+            if (Ring1.gameObject.activeInHierarchy)
+            {
+                Ring1
+                    .gameObject
+                    .SetActive(false);
+
+                Ring2
+                    .gameObject
+                    .SetActive(true);
+            }
+            else
+            {
+                Ring1
+                    .gameObject
+                    .SetActive(true);
+
+                Ring2
+                    .gameObject
+                    .SetActive(false);
+            }
+        }
 
         public void ShowCost(BuildingType buildingType)
         {

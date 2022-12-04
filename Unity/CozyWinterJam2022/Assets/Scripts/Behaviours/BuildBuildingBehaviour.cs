@@ -33,8 +33,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             BuildBuildingPanel = FindObjectOfType<BuildBuildingPanelBehaviour>(true);
             
-            //GetComponent<Image>()
-               //.alphaHitTestMinimumThreshold = 0.1f;
+            GetComponent<Image>()
+               .alphaHitTestMinimumThreshold = 0.1f;
         }
 
         #endregion
