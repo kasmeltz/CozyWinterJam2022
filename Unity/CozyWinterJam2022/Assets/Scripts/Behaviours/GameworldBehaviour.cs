@@ -30,6 +30,10 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public float MusicSegmentLength;
 
+        public AudioSource SoundEffectSource;
+
+        public AudioClip BuildingSFX;
+
         public Dictionary<Tuple<float, float>, BuildingBehaviour> Buildings { get; set; }
 
         public Dictionary<Tuple<float, float>, ResourceBehaviour> ResourceObjects { get; set; }
@@ -160,7 +164,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public void BuildBuilding(float x, float z, BuildingType buildingType)
         {
-
             if (BuildingExists(x, z))
             {
                 return;
@@ -177,6 +180,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .PositionProgressBar();
             
             AddBuilding(x, z, building);
+
+            SoundEffectSource
+                .PlayOneShot(BuildingSFX, 1);
         }
 
         public bool BuildingExists(float x, float z)
