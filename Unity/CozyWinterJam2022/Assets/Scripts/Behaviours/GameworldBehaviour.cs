@@ -50,7 +50,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected ToDoListBehaviour ToDoList { get; set; }
 
-        protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; }       
+        protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; } 
+        
+        protected bool IsYearOver { get; set; }
 
         #endregion
 
@@ -293,6 +295,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
             }
 
             UpdateCheerBar();
+            
+            IsYearOver = true;
         }
 
         public ResourceBehaviour GetResourceSurroundingPosition(Vector3 position, ProduceableResourceCategory category)
@@ -510,6 +514,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             CurrentYearEndGoals = AllYearEndGoals[0];
             Year = year;
+            IsYearOver = false;
 
             ToDoList
                 .SetGoals(CurrentYearEndGoals);
@@ -517,6 +522,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void Update()
         {
+            if (IsYearOver)
+            {
+                return;
+            }
+
             ProduceResources();
 
             YearTimeLeft -= Time.deltaTime * YearTimeSpeed;
@@ -572,7 +582,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             Inventory = new float[resources.Length];
             Inventory[(int)ProduceableResourceCategory.Food] = 100;
-            Inventory[(int)ProduceableResourceCategory.Wood] = 100;
+            Inventory[(int)ProduceableResourceCategory.Wood] = 200;
             Inventory[(int)ProduceableResourceCategory.Cookies] = 100;
             Inventory[(int)ProduceableResourceCategory.Gingerbread] = 100;
 

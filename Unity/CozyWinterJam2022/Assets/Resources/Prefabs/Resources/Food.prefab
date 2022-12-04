@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourceCategory: 1
-  StartingAmount: 60
+  StartingAmount: 180
   PerTickUsedAmount: 1
