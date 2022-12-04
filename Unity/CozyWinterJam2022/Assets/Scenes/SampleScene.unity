@@ -12062,6 +12062,22 @@ PrefabInstance:
       propertyPath: ButtonText
       value: 
       objectReference: {fileID: 1095346489}
+    - target: {fileID: 2834326177073122387, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
+      propertyPath: Lines.Array.data[0]
+      value: Hello how are you?
+      objectReference: {fileID: 0}
+    - target: {fileID: 2834326177073122387, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
+      propertyPath: Lines.Array.data[1]
+      value: I'm good how are you?
+      objectReference: {fileID: 0}
+    - target: {fileID: 2834326177073122387, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
+      propertyPath: Lines.Array.data[2]
+      value: I'm fine thanks.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2834326177073122387, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
+      propertyPath: Lines.Array.data[3]
+      value: Go do some work!
+      objectReference: {fileID: 0}
     - target: {fileID: 2834326177339199510, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: m_SizeDelta.x
       value: -40
