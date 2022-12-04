@@ -371,6 +371,13 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
                 var workers = building.WorkersPresent;
 
+                if( building.BuildingType == BuildingType.ArtificersHouse ||
+                    building.BuildingType == BuildingType.ArtisansHouse ||
+                    building.BuildingType == BuildingType.ElfHouse)
+                {
+                    workers = 1;
+                }
+
                 bool allRequiredResourcesOnHand = true;
                 for (int i = 0; i < building.ResourcesConsumedCategories.Length; i++)
                 {

@@ -230,7 +230,7 @@ MonoBehaviour:
   BuildSeconds: 10
   BuildSpeed: 1
   BuildingType: 10
-  MaxWorkers: 7
+  MaxWorkers: 0
   WorkerCategory: 1
   ResourceCostCategories: 050000000000000002000000
   ResourceCostAmounts:
@@ -239,7 +239,7 @@ MonoBehaviour:
   - 20
   ResourcesProducedCategories: 05000000
   ResourcesProducedAmounts:
-  - 0.16666667
+  - 1.1666666
   ResourcesConsumedCategories: 01000000
   ResourcesConsumedAmounts:
   - 0.016666668
