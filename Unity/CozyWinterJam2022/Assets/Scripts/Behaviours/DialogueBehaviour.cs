@@ -1,6 +1,8 @@
 namespace HNS.CozyWinterJam2022.Behaviours
 {
+    using HNS.CozyWinterJam2022.Models;
     using System.Collections;
+    using System.Collections.Generic;
     using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
@@ -10,28 +12,49 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public TMP_Text ButtonText;
         public Image SpeakerLeftImage;
         public Image SpeakerRightImage;
-        public TextMeshProUGUI text;
-        public string[] Lines;
-        public bool[] IsSelf;
+        public TextMeshProUGUI text;        
         int LinesPlace = 0;
 
+        public List<DialogLine[]> Lines { get; set; }
+
         protected GameworldBehaviour Gameworld { get; set; }
+
+        protected int Year { get; set; }
 
         private void Awake()
         {
             Gameworld = FindObjectOfType<GameworldBehaviour>();
-            Gameworld.DialogueIsOpen = true;
+
+            var year0Lines = new DialogLine[]
+            {
+                new DialogLine("HELLO", false), 
+                new DialogLine("HELLO BACK", true)
+            };
+
+            Lines
+                .Add(year0Lines);
+
+            var year1Lines = new DialogLine[]
+            {
+                new DialogLine("HELLO AGAIN", false),
+                new DialogLine("HELLO AGAIN BACK", true)
+            };
+
+            Lines
+                .Add(year1Lines);
         }
 
         void Start()
         {
             text.text = "";
-            DisplayText(LinesPlace);
+            ShowYearMessage(0);
         }
 
         void DisplayText(int index)
         {
-            if (IsSelf[index])
+            var yearLines = Lines[Year];
+
+            if (yearLines[index].IsSelf)
             {
                 SpeakerLeftImage.CrossFadeAlpha(0.25f, 0.5f, false);
                 SpeakerRightImage.CrossFadeAlpha(1f, 0.5f, false);
@@ -47,9 +70,10 @@ namespace HNS.CozyWinterJam2022.Behaviours
             }
 
             text.text = "";
-            StartCoroutine(PrintText(Lines[LinesPlace]));
+            
+            StartCoroutine(PrintText(yearLines[LinesPlace].Text));
 
-            if (LinesPlace == Lines.Length - 1)
+            if (LinesPlace == yearLines.Length - 1)
             {
                 ButtonText.text = "Done";
             }
@@ -63,12 +87,15 @@ namespace HNS.CozyWinterJam2022.Behaviours
         {
             LinesPlace++;
 
-            if (LinesPlace >= Lines.Length)
+            var yearLines = Lines[Year];
+
+            if (LinesPlace >= yearLines.Length)
             {
                 gameObject
                     .SetActive(false);
 
-                Gameworld.DialogueIsOpen = false;
+                Gameworld
+                    .StartNewYear(Gameworld.Year + 1);
 
                 return;
             }
@@ -83,6 +110,18 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 text.text += c;
                 yield return new WaitForSeconds(0.05f);
             }
+        }
+
+        public void ShowYearMessage(int year)
+        {
+            Year = year;
+
+            gameObject
+                .SetActive(true);
+
+            LinesPlace = 0;
+
+            DisplayText(LinesPlace);
         }
     }
 }

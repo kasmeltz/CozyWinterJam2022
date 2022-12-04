@@ -42,9 +42,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public float YearTimeLeft { get; set; }
 
-        public float Year { get; set; }
-
-        public bool DialogueIsOpen { get; set; }
+        public int Year { get; set; }
 
         public List<List<Tuple<ProduceableResourceCategory, float>>> AllYearEndGoals { get; set; }
 
@@ -55,6 +53,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
         public Dictionary<BuildingType, List<float>> BuildingResourceCostAmounts { get; set; }
 
         protected ToDoListBehaviour ToDoList { get; set; }
+
+        protected DialogueBehaviour Dialogue { get; set; }
 
         protected Dictionary<BuildingType, bool> BuildingTypesAvailable { get; set; } 
         
@@ -292,6 +292,9 @@ namespace HNS.CozyWinterJam2022.Behaviours
             UpdateCheerBar();
             
             IsYearOver = true;
+
+            Dialogue
+                .ShowYearMessage(Year + 1);
         }
 
         public ResourceBehaviour GetResourceSurroundingPosition(Vector3 position, ProduceableResourceCategory category)
@@ -505,14 +508,15 @@ namespace HNS.CozyWinterJam2022.Behaviours
             return true;
        }
 
-        protected void StartNewYear(int year)
+        public void StartNewYear(int year)
         {
-            CurrentYearEndGoals = AllYearEndGoals[0];
+            CurrentYearEndGoals = AllYearEndGoals[year];
             Year = year;
-            IsYearOver = false;
 
             ToDoList
                 .SetGoals(CurrentYearEndGoals);
+
+            IsYearOver = false;
         }
 
         protected void Update()
@@ -521,12 +525,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
             {
                 return;
             }
-
-            if (DialogueIsOpen)
-            {
-                return;
-            }
-
+            
             ProduceResources();
 
             YearTimeLeft -= Time.deltaTime * YearTimeSpeed;
@@ -538,6 +537,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         protected void Awake()
         {
+            Year = -1;
+            IsYearOver = true;
+
+            Dialogue = FindObjectOfType<DialogueBehaviour>();
+
             BuildingTypesAvailable = new Dictionary<BuildingType, bool>
             {
                 [BuildingType.Lumbercamp] = true,
@@ -604,8 +608,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 .Add(firstYearGoals);
 
             ToDoList = FindObjectOfType<ToDoListBehaviour>(true);
-
-            StartNewYear(0);
 
             ChristmasCheer = StartingChristmasCheer;
 
