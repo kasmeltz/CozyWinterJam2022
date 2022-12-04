@@ -36,14 +36,14 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 SpeakerLeftImage.CrossFadeAlpha(0.25f, 0.5f, false);
                 SpeakerRightImage.CrossFadeAlpha(1f, 0.5f, false);
 
-                text.alignment = TMPro.TextAlignmentOptions.TopRight;
+                text.alignment = TextAlignmentOptions.TopRight;
             }
             else
             {
                 SpeakerLeftImage.CrossFadeAlpha(1f, 0.5f, false);
                 SpeakerRightImage.CrossFadeAlpha(0.25f, 0.5f, false);
 
-                text.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                text.alignment = TextAlignmentOptions.TopLeft;
             }
 
             text.text = "";
