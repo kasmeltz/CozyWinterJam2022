@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44129816, g: 0.49010098, b: 0.5701506, a: 1}
+  m_IndirectSpecularColor: {r: 0.44129857, g: 0.4901014, b: 0.57015187, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11448,7 +11448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2834326176734716659, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 330
+      value: 290
       objectReference: {fileID: 0}
     - target: {fileID: 2834326176734716660, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: m_Sprite
@@ -11476,7 +11476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2834326176748841962, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 330
+      value: 289
       objectReference: {fileID: 0}
     - target: {fileID: 2834326176748841963, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: m_Sprite
@@ -11640,7 +11640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2834326177339199511, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: m_fontSize
-      value: 42
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 2834326177339199511, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: m_fontAsset
@@ -11652,7 +11652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2834326177339199511, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: m_fontSizeBase
-      value: 42
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 2834326177339199511, guid: a5bbe4eaabb0de743bc914686c67dbd9, type: 3}
       propertyPath: m_sharedMaterial
