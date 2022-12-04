@@ -108,8 +108,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
             {
                 var roads = FindObjectOfType<RoadsBehaviour>();
 
-                var firstVertex = new Vector3(building.transform.position.x, -0.5f, building.transform.position.z);
-                var secondVertex = new Vector3(0, -0.5f, 0);
+                var firstVertex = new Vector3(building.transform.position.x, 0f, building.transform.position.z);
+                var secondVertex = new Vector3(0, 0f, 0);
 
                 roads
                     .AddRoads(firstVertex, secondVertex);
