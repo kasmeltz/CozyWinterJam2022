@@ -153,9 +153,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             building
                 .PositionProgressBar();
-
-            gameObject
-                .SetActive(false);
             
             AddBuilding(x, z, building);
         }
