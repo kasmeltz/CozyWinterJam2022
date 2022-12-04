@@ -230,7 +230,7 @@ MonoBehaviour:
   BuildSeconds: 0
   BuildSpeed: 1
   BuildingType: 12
-  MaxWorkers: 10
+  MaxWorkers: 0
   WorkerCategory: 0
   ResourceCostCategories: 
   ResourceCostAmounts: []

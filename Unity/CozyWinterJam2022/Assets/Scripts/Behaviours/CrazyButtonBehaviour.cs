@@ -6,7 +6,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
     [AddComponentMenu("CWJ2022/CrazyButton")]
 
-    public class CrazyButtonBehaviour : MonoBehaviour, IPointerEnterHandler
+    public class CrazyButtonBehaviour : MonoBehaviour
     {
         #region Members
         
@@ -23,17 +23,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
             GetComponent<Image>()
                 .alphaHitTestMinimumThreshold = 0.1f;
         }
-
-        #endregion
-
-        #region IPointerEnterHandler
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            Debug
-                .Log("ENTER!");
-       }
-
 
         #endregion
     }
