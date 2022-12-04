@@ -105,17 +105,6 @@ namespace HNS.CozyWinterJam2022.Behaviours
                     }
                 }
             }
-
-            if (Buildings.Count > 1)
-            {
-                var roads = FindObjectOfType<RoadsBehaviour>();
-
-                var firstVertex = new Vector3(building.transform.position.x, 0f, building.transform.position.z);
-                var secondVertex = new Vector3(0, 0f, 0);
-
-                roads
-                    .AddRoads(firstVertex, secondVertex);
-            }
         }
 
         #endregion
@@ -239,7 +228,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             var resourceObject = Instantiate(prefab);
             resourceObject.transform.position = new Vector3(x - 25, 0, z - 25);
-            resourceObject.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+            resourceObject.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
             resourceObject.AmounLeft = resourceObject.StartingAmount;
 
             ResourceObjects[key] = resourceObject;
@@ -254,9 +243,10 @@ namespace HNS.CozyWinterJam2022.Behaviours
             List<ProduceableResourceCategory> potentialResources = new List<ProduceableResourceCategory>
             {
                 ProduceableResourceCategory.Wood,
+                ProduceableResourceCategory.Wood,
+                ProduceableResourceCategory.Wood,
                 ProduceableResourceCategory.Gingerbread,
-                ProduceableResourceCategory.Coal,
-                ProduceableResourceCategory.Steel,
+                ProduceableResourceCategory.Coal
             };
 
             for (int z = 0; z < MapHeight; z++)
@@ -265,7 +255,7 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 {
                     WorldMap[z, x] = -1;
 
-                    if (UnityEngine.Random.Range(0, 100) > 70)
+                    if (UnityEngine.Random.Range(0, 100) > 80)
                     {
                         var resourceIndex = UnityEngine
                             .Random
@@ -662,12 +652,26 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
             AllYearEndGoals = new List<List<Tuple<ProduceableResourceCategory, float>>>();
 
-            var firstYearGoals = new List<Tuple<ProduceableResourceCategory, float>>();
-            firstYearGoals
-                .Add(new Tuple<ProduceableResourceCategory, float>(ProduceableResourceCategory.Present1, 5));
+            var yearGoals = new List<Tuple<ProduceableResourceCategory, float>>();
+            yearGoals
+                .Add(new Tuple<ProduceableResourceCategory, float>(ProduceableResourceCategory.Present1, 100));
 
             AllYearEndGoals
-                .Add(firstYearGoals);
+                .Add(yearGoals);
+
+            yearGoals = new List<Tuple<ProduceableResourceCategory, float>>();
+            yearGoals
+                .Add(new Tuple<ProduceableResourceCategory, float>(ProduceableResourceCategory.Present1, 300));
+
+            AllYearEndGoals
+                .Add(yearGoals);
+
+            yearGoals = new List<Tuple<ProduceableResourceCategory, float>>();
+            yearGoals
+                .Add(new Tuple<ProduceableResourceCategory, float>(ProduceableResourceCategory.Present1, 700));
+
+            AllYearEndGoals
+                .Add(yearGoals);
 
             ToDoList = FindObjectOfType<ToDoListBehaviour>(true);
 

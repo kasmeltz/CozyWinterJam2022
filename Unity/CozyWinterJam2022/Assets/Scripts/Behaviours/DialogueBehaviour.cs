@@ -1,7 +1,6 @@
 namespace HNS.CozyWinterJam2022.Behaviours
 {
     using HNS.CozyWinterJam2022.Models;
-    using System.Collections;
     using System.Collections.Generic;
     using TMPro;
     using UnityEngine;
@@ -48,11 +47,27 @@ namespace HNS.CozyWinterJam2022.Behaviours
                 new DialogLine("<i>TUTORIAL\n*Later that Day...*</i>", false, null, null),
                 new DialogLine("Next! ... Ah, the new Overseer. Let me go over your list of tasks.", true, null, AdvisorSprite),
                 new DialogLine("OH... <b>You are the one that will have to make sure that by the end of the year the big man gets his presents to deliver</i>. Otherwise peoples <b>Christmas Joy</b> will go down and this fragile dream we have created will be ruined! ... FOREVER... No pressure.", true, null, AdvisorSprite),
-                new DialogLine("Now, go make us 5 Presents to start with. Lets see what you are worth.", true, null, AdvisorSprite),
+                new DialogLine("Now, go make us 100 Presents to start with. Lets see what you are worth.", true, null, AdvisorSprite),
             };
 
             Lines
                 .Add(year0Lines);
+
+            var year1Lines = new DialogLine[]
+            {
+                new DialogLine("This is year 2", false, null, null),
+            };
+
+            Lines
+                .Add(year1Lines);
+
+            var year2Lines = new DialogLine[]
+            {
+                new DialogLine("This is year 3", false, null, null),
+            };
+
+            Lines
+                .Add(year2Lines);
         }
 
         void Start()
