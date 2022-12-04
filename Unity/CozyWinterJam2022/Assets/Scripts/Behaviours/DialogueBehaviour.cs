@@ -23,6 +23,8 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         private void Awake()
         {
+            Lines = new List<DialogLine[]>();
+
             Gameworld = FindObjectOfType<GameworldBehaviour>();
 
             var year0Lines = new DialogLine[]

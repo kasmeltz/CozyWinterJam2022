@@ -510,6 +510,11 @@ namespace HNS.CozyWinterJam2022.Behaviours
 
         public void StartNewYear(int year)
         {
+            if (year >= AllYearEndGoals.Count)
+            {
+                return;
+            }
+
             CurrentYearEndGoals = AllYearEndGoals[year];
             Year = year;
 
