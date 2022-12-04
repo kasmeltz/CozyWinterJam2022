@@ -3,7 +3,12 @@ guid: 3154a8ca0fcf11346865ad8c5370cf15
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Window Light
+    second: {fileID: 2100000, guid: c3af356857f5b8b4f8c0baf9583b62ea, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
